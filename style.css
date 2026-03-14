@@ -1,5 +1,17 @@
+/* Für mobile Geräte*/
+@media (max-width: 768px) {
+
+  h1 {
+    font-size: 30px;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+
+}
+
 body {
-  background-color: black;
   background-color: black;
   color: white;
   font-family: Arial, sans-serif;
