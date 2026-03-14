@@ -2,10 +2,14 @@ body {
   background-color: black;
   background-color: black;
   color: white;
-  font-family: 'Montserrat', sans-serif;
-  h1, h2 {
-  font-family: 'Bebas Neue', sans-serif;
-  letter-spacing: 2px;
+  font-family: Arial, sans-serif;
+
+
+h1 {
+  font-size: 60px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  text-transform: uppercase;
 }
   p {
   color: white;
