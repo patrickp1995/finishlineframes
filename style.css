@@ -39,5 +39,11 @@ h1 {
   min-height: 100%;
   object-fit: cover;
 }
-
+@media (max-width: 768px) {
+  #bg-video {
+    height: auto;        /* Höhe automatisch */
+    width: 100%;         /* volle Breite */
+    max-height: 400px;   /* maximal 400px hoch */
+  }
+}
 }
