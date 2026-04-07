@@ -26,7 +26,23 @@
     "Sweat now, shine later.",
     "Your only limit is you."
   ];
+</script>
+<nav class="navbar">
+  <div class="logo">FLF</div>
+  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
 
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Zitate</a></li>
+    <li><a href="#">Über</a></li>
+    <li><a href="#">Kontakt</a></li>
+  </ul>
+</nav>
+  <script>
+function toggleMenu() {
+  document.getElementById("navLinks").classList.toggle("active");
+}
+</script>
   // Berechne das Zitat für den Tag
   const today = new Date().getDate(); // Zahl des Tages
   const index = today % quotes.length;
