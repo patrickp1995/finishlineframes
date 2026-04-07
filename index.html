@@ -27,6 +27,9 @@
     "Your only limit is you."
   ];
 </script>
+
+  // Setze das Zitat ins HTML
+  document.getElementById("quote").innerText = quotes[index];
 <nav class="navbar">
   <div class="logo">FLF</div>
   <div class="menu-toggle" onclick="toggleMenu()">☰</div>
@@ -46,9 +49,6 @@ function toggleMenu() {
   // Berechne das Zitat für den Tag
   const today = new Date().getDate(); // Zahl des Tages
   const index = today % quotes.length;
-
-  // Setze das Zitat ins HTML
-  document.getElementById("quote").innerText = quotes[index];
 
 <!-- Video einfügen -->
 <video autoplay muted loop playsinline id="bg-video">
