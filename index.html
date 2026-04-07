@@ -1,19 +1,107 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Finish Line Frames</title>
-<link href="style.css" rel="stylesheet">
-</head>
+<style>
+  /* Grundstil */
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: white;
+    padding-top: 70px; /* Platz für Menüleiste */
+    background-color: black;
+  }
 
+  /* Navbar */
+  .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    z-index: 1000;
+  }
+
+  .logo {
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+  }
+
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: 0.3s;
+  }
+
+  .nav-links li a:hover {
+    color: #00ffcc;
+  }
+
+  /* Überschrift */
+  h1 {
+    text-align: center;
+    font-size: 60px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin: 20px 0 10px 0;
+  }
+
+  /* Zitat */
+  #quote {
+    font-size: 22px;
+    font-style: italic;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  /* Hintergrundvideo */
+  #bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 40px;
+    }
+
+    .nav-links {
+      gap: 15px;
+    }
+
+    #quote {
+      font-size: 18px;
+    }
+  }
+</style>
+</head>
 <body>
 
-<!-- Menü oben -->
+<!-- Horizontale Menüleiste -->
 <nav class="navbar">
   <div class="logo">Finish Line Frames</div>
-  <div class="menu-toggle" id="menuBtn">☰</div>
-
-  <ul class="nav-links" id="navLinks">
+  <ul class="nav-links">
     <li><a href="#">Home</a></li>
     <li><a href="#">Quotes</a></li>
     <li><a href="#">About</a></li>
@@ -24,17 +112,16 @@
 <!-- Überschrift -->
 <h1>Finish Line Frames</h1>
 
-<!-- Zitat direkt unter der Überschrift -->
+<!-- Zitat direkt unter Überschrift -->
 <p id="quote"></p>
 
-<!-- Video -->
+<!-- Hintergrundvideo -->
 <video autoplay muted loop playsinline id="bg-video">
   <source src="sport.mp4" type="video/mp4">
 </video>
 
-<!-- JavaScript -->
+<!-- JavaScript für tägliches Zitat -->
 <script>
-  // Liste der englischen Lauf-Zitate
   const quotes = [
     "The first step is always the hardest.",
     "You don’t have to be fast, you just have to start.",
@@ -48,20 +135,10 @@
     "Your only limit is you."
   ];
 
-  // Berechne das Zitat für den Tag
   const today = new Date().getDate();
   const index = today % quotes.length;
 
-  // Setze das Zitat ins HTML
   document.getElementById("quote").innerText = quotes[index];
-
-  // Menü-Funktion
-  const menuBtn = document.getElementById("menuBtn");
-  const navLinks = document.getElementById("navLinks");
-
-  menuBtn.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
-  });
 </script>
 
 </body>
