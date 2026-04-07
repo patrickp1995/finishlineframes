@@ -18,11 +18,10 @@ h1 {
   margin: 20px 0 10px 0;
 }
 
-/* Zitat */
+/* Zitat direkt unter H1 */
 #quote {
   font-size: 22px;
   font-style: italic;
-  color: white;
   text-align: center;
   margin-top: 15px;
   margin-bottom: 30px;
@@ -44,12 +43,12 @@ h1 {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 15px 20px; /* etwas kleineres Padding */
+  padding: 15px 20px;
   background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-sizing: border-box; /* verhindert Überlauf */
+  box-sizing: border-box;
   z-index: 1000;
 }
 
@@ -64,9 +63,9 @@ h1 {
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 20px; /* kleinerer Abstand, passt auf Desktop */
+  gap: 20px; /* Abstand zwischen Links */
   margin: 0;
-  padding-right: 20px; /* sorgt dafür, dass letztes Element sichtbar bleibt */
+  padding-right: 20px; /* letzter Link sichtbar */
   box-sizing: border-box;
 }
 
@@ -81,6 +80,16 @@ h1 {
   color: #00ffcc;
 }
 
+/* Hamburger-Button (Mobile) */
+.menu-toggle {
+  display: none; /* Desktop: unsichtbar */
+  font-size: 30px;
+  cursor: pointer;
+  color: white;
+  z-index: 1001;
+  user-select: none;
+}
+
 /* Mobile-Anpassung */
 @media (max-width: 768px) {
   h1 {
@@ -91,22 +100,27 @@ h1 {
     font-size: 18px;
   }
 
+  .menu-toggle {
+    display: block; /* sichtbar auf Mobile */
+  }
+
   .nav-links {
     flex-direction: column;
     gap: 15px;
     background: rgba(0,0,0,0.9);
     position: fixed;
     top: 70px;
-    right: -100%;
+    right: -100%; /* unsichtbar starten */
     width: 200px;
     height: calc(100% - 70px);
     padding-top: 20px;
     padding-right: 0;
     transition: 0.3s;
+    z-index: 1000;
   }
 
   .nav-links.active {
-    right: 0;
+    right: 0; /* sichtbar beim Klick */
   }
 
   .nav-links li {
