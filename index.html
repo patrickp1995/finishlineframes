@@ -8,12 +8,32 @@
 
 <body>
 
-
-
   
   
 <h1>Finish Line Frames</h1>
-<p>YOU DON´T HAVE TO BE PERFECT TO BE CONSISTENT!</p>
+<p>id="quote"></p> <!-- Hier erscheint das tägliche Zitat -->
+  <script>
+  // Liste der englischen Lauf-Zitate
+  const quotes = [
+    "The first step is always the hardest.",
+    "You don’t have to be fast, you just have to start.",
+    "Run when you can, walk if you have to, never quit.",
+    "Every mile brings you closer to yourself.",
+    "Pain is temporary. Pride is forever.",
+    "Discipline beats motivation.",
+    "Run your own race.",
+    "No excuses. Just run.",
+    "Sweat now, shine later.",
+    "Your only limit is you."
+  ];
+
+  // Berechne das Zitat für den Tag
+  const today = new Date().getDate(); // Zahl des Tages
+  const index = today % quotes.length;
+
+  // Setze das Zitat ins HTML
+  document.getElementById("quote").innerText = quotes[index];
+</script>
 <nav class="navbar">
   <div class="logo">FLF</div>
   <div class="menu-toggle" onclick="toggleMenu()">☰</div>
