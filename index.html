@@ -72,7 +72,7 @@ h1 {
   display: flex;
   gap: 20px; /* Abstand zwischen Links */
   margin: 0;
-  padding-right: 20px; /* letztes Element sichtbar */
+  padding-right: 20px; /* letzter Link sichtbar */
   box-sizing: border-box;
 }
 
@@ -87,6 +87,16 @@ h1 {
   color: #00ffcc;
 }
 
+/* Hamburger-Button (Mobile) */
+.menu-toggle {
+  display: none; /* Desktop: unsichtbar */
+  font-size: 30px;
+  cursor: pointer;
+  color: white;
+  z-index: 1001;
+  user-select: none;
+}
+
 /* Mobile-Anpassung */
 @media (max-width: 768px) {
   h1 {
@@ -97,62 +107,56 @@ h1 {
     font-size: 18px;
   }
 
+  .menu-toggle {
+    display: block; /* sichtbar auf Mobile */
+  }
+
   .nav-links {
     flex-direction: column;
     gap: 15px;
     background: rgba(0,0,0,0.9);
     position: fixed;
     top: 70px;
-    right: -100%;
+    right: -100%; /* unsichtbar starten */
     width: 200px;
     height: calc(100% - 70px);
     padding-top: 20px;
     padding-right: 0;
     transition: 0.3s;
+    z-index: 1000;
   }
 
   .nav-links.active {
-    right: 0;
+    right: 0; /* sichtbar beim Klick */
   }
 
   .nav-links li {
     margin: 20px 0;
     text-align: center;
   }
-
-  /* Hamburger-Button */
-  .menu-toggle {
-    display: block;
-    font-size: 30px;
-    cursor: pointer;
-    color: white;
-  }
-}
-
-/* Desktop: kein Hamburger */
-.menu-toggle {
-  display: none;
 }
 </style>
 </head>
 <body>
 
-<!-- Horizontale Menüleiste -->
+<!-- Navbar -->
 <nav class="navbar">
   <div class="logo">Finish Line Frames</div>
+
   <ul class="nav-links" id="navLinks">
     <li><a href="#">Home</a></li>
     <li><a href="#">Quotes</a></li>
     <li><a href="#">About</a></li>
     <li><a href="#">Contact</a></li>
   </ul>
-  <div class="menu-toggle" id="menuBtn">☰</div> <!-- nur sichtbar auf Mobile -->
+
+  <div class="menu-toggle" id="menuBtn">☰</div>
 </nav>
 
 <!-- Überschrift -->
 <h1>Finish Line Frames</h1>
 
-<!-- Zitat direkt unter H1 -->
+<!-- Zitat -->
 <p id="quote"></p>
 
 <!-- Hintergrundvideo -->
@@ -176,12 +180,12 @@ h1 {
     "Your only limit is you."
   ];
 
-  // Tägliches Zitat berechnen
+  // Tägliches Zitat
   const today = new Date().getDate();
   const index = today % quotes.length;
   document.getElementById("quote").innerText = quotes[index];
 
-  // Mobile-Menü Funktion
+  // Mobile-Menü Toggle
   const menuBtn = document.getElementById("menuBtn");
   const navLinks = document.getElementById("navLinks");
 
