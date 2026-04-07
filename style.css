@@ -1,18 +1,12 @@
 /* Basis */
 body {
-margin: 0;
-  padding-top: 70px;
+  margin: 0;
+  padding-top: 70px; /* Platz für die feste Menüleiste */
   background-color: black;
   color: white;
   font-family: Arial, sans-serif;
 }
-#quote {
-  font-size: 22px;
-  font-style: italic;
-  color: white;
-  text-align: center;
-  margin-top: 15px; /* Abstand unter H1 */
-}
+
 /* Überschrift */
 h1 {
   font-size: 60px;
@@ -21,12 +15,17 @@ h1 {
   text-transform: uppercase;
   color: #FFFFFF;
   text-align: center;
+  margin: 20px 0 10px 0;
 }
 
-p {
+/* Zitat direkt unter Überschrift */
+#quote {
+  font-size: 22px;
+  font-style: italic;
   color: white;
-  font-weight: bold;
   text-align: center;
+  margin-top: 15px; /* Abstand unter H1 */
+  margin-bottom: 30px;
 }
 
 /* Video */
@@ -40,12 +39,12 @@ p {
   z-index: -1;
 }
 
-/* Navbar */
+/* Navbar - horizontale Leiste */
 .navbar {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 15px 20px;
+  padding: 15px 30px;
   background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: space-between;
@@ -53,56 +52,62 @@ p {
   z-index: 1000;
 }
 
+/* Logo */
 .logo {
   font-weight: bold;
-  font-size: 18px;
+  font-size: 20px;
+  color: white;
 }
 
-/* Menü Links */
+/* Menü Links horizontal */
 .nav-links {
   list-style: none;
-  position: fixed;
-  top: 60px;
-  right: -100%;
-  width: 200px;
-  height: 100%;
-  background: black;
-  flex-direction: column;
-  padding-top: 20px;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
   transition: 0.3s;
 }
 
-.nav-links li {
-  margin: 20px 0;
-  text-align: center;
+.nav-links li a:hover {
+  color: #00ffcc;
 }
 
-.nav-links a {
-  color: white;
-  text-decoration: none;
-  font-size: 18px;
-}
-
-/* Aktiv (aufgeklappt) */
-.nav-links.active {
-  right: 0;
-}
-
-/* Hamburger Button */
-.menu-toggle {
-  font-size: 30px;
-  cursor: pointer;
-}
-
-/* Mobile */
+/* Mobile-Anpassung */
 @media (max-width: 768px) {
   h1 {
-    font-size: 30px;
+    font-size: 40px;
   }
 
-  #bg-video {
-    width: 100%;
-    height: auto;
-    max-height: 400px;
+  #quote {
+    font-size: 18px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 15px;
+    background: rgba(0,0,0,0.9);
+    position: fixed;
+    top: 70px;
+    right: -100%;
+    width: 200px;
+    height: calc(100% - 70px);
+    padding-top: 20px;
+    transition: 0.3s;
+  }
+
+  .nav-links.active {
+    right: 0;
+  }
+
+  .nav-links li {
+    margin: 20px 0;
+    text-align: center;
   }
 }
