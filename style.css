@@ -35,7 +35,7 @@ h1 {
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* passt das Video immer ins Fenster */
+  object-fit: cover;
   z-index: -1;
 }
 
@@ -44,11 +44,12 @@ h1 {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 15px 30px;
+  padding: 15px 20px; /* etwas kleineres Padding */
   background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box; /* verhindert Überlauf */
   z-index: 1000;
 }
 
@@ -63,9 +64,10 @@ h1 {
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 30px;
+  gap: 20px; /* kleinerer Abstand, passt auf Desktop */
   margin: 0;
-  padding: 0;
+  padding-right: 20px; /* sorgt dafür, dass letztes Element sichtbar bleibt */
+  box-sizing: border-box;
 }
 
 .nav-links li a {
@@ -99,6 +101,7 @@ h1 {
     width: 200px;
     height: calc(100% - 70px);
     padding-top: 20px;
+    padding-right: 0;
     transition: 0.3s;
   }
 
