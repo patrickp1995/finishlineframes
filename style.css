@@ -1,50 +1,101 @@
-/* Für mobile Geräte*/
-@media (max-width: 768px) {
-
-  h1 {
-    font-size: 30px;
-  }
-
-  .gallery {
-    grid-template-columns: 1fr;
-  }
-
-}
-
+/* Basis */
 body {
+  margin: 0;
   background-color: black;
   color: white;
   font-family: Arial, sans-serif;
+}
 
-
+/* Überschrift */
 h1 {
   font-size: 60px;
   font-weight: 900;
   letter-spacing: 4px;
   text-transform: uppercase;
+  color: #FFFFFF;
+  text-align: center;
 }
-  p {
+
+p {
   color: white;
   font-weight: bold;
+  text-align: center;
 }
- h1 {
-  color: #FFFFFF;
-}
-  body {
 
-}
+/* Video */
 #bg-video {
-  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 0;
   min-width: 100%;
   min-height: 100%;
   object-fit: cover;
-  overflow: hidden
+  z-index: -1;
 }
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 15px 20px;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* Menü Links */
+.nav-links {
+  list-style: none;
+  position: fixed;
+  top: 60px;
+  right: -100%;
+  width: 200px;
+  height: 100%;
+  background: black;
+  flex-direction: column;
+  padding-top: 20px;
+  transition: 0.3s;
+}
+
+.nav-links li {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+/* Aktiv (aufgeklappt) */
+.nav-links.active {
+  right: 0;
+}
+
+/* Hamburger Button */
+.menu-toggle {
+  font-size: 30px;
+  cursor: pointer;
+}
+
+/* Mobile */
 @media (max-width: 768px) {
-  #bg-video {
-    height: auto;        /* Höhe automatisch */
-    width: 100%;         /* volle Breite */
-    max-height: 400px;   /* maximal 400px hoch */
+  h1 {
+    font-size: 30px;
   }
-}
+
+  #bg-video {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+  }
 }
