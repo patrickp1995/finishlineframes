@@ -25,13 +25,19 @@ h1 {
   margin: 20px 0 10px 0;
 }
 
-/* Zitat direkt unter H1 */
+/* Zitat direkt unter H1 mit Fade-In */
 #quote {
   font-size: 22px;
   font-style: italic;
   text-align: center;
   margin-top: 15px;
   margin-bottom: 30px;
+  opacity: 0;             /* unsichtbar am Anfang */
+  transition: opacity 1.5s ease-in-out; /* sanfter Übergang */
+}
+
+#quote.visible {
+  opacity: 1; /* sichtbar nach Fade-In */
 }
 
 /* Hintergrundvideo */
@@ -70,9 +76,9 @@ h1 {
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 20px; /* Abstand zwischen Links */
+  gap: 20px;
   margin: 0;
-  padding-right: 20px; /* letzter Link sichtbar */
+  padding-right: 20px;
   box-sizing: border-box;
 }
 
@@ -186,7 +192,7 @@ h1 {
   const quoteElement = document.getElementById("quote");
   quoteElement.innerText = quotes[index];
 
-  // Sanftes Fade-In
+  // Fade-In für das Zitat
   setTimeout(() => {
     quoteElement.classList.add("visible");
   }, 100); // kleine Verzögerung für Übergang
