@@ -12,6 +12,7 @@ body {
   background-color: black;
   color: white;
   font-family: Arial, sans-serif;
+  overflow-x: hidden;
 }
 
 /* Überschrift */
@@ -23,6 +24,9 @@ h1 {
   color: #FFFFFF;
   text-align: center;
   margin: 20px 0 10px 0;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 1s ease, transform 1s ease;
 }
 
 /* Zitat direkt unter H1 mit Fade-In */
@@ -33,11 +37,8 @@ h1 {
   margin-top: 15px;
   margin-bottom: 30px;
   opacity: 0;
-  transition: opacity 1.5s ease-in-out;
-}
-
-#quote.visible {
-  opacity: 1;
+  transform: translateY(-10px);
+  transition: opacity 1.5s ease, transform 1.5s ease;
 }
 
 /* Hintergrundvideo */
@@ -49,6 +50,8 @@ h1 {
   height: 100%;
   object-fit: cover;
   z-index: -1;
+  opacity: 0;
+  transition: opacity 2s ease;
 }
 
 /* Navbar */
@@ -187,10 +190,9 @@ h1 {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    max-height: 500px; /* genug Höhe für Untermenü */
+    max-height: 500px;
   }
 
-  /* Pfeil drehen, wenn aktiv */
   .nav-links li.active > a .arrow {
     transform: rotate(90deg);
   }
@@ -222,9 +224,9 @@ h1 {
       </ul>
     </li>
     <li class="dropdown">
-      <a href="#">Events <span class="arrow">▶</span></a>
+      <a href="events-running.html">Events <span class="arrow">▶</span></a>
       <ul>
-        <li><a href="#">Running</a></li>
+        <li><a href="events-running.html">Running</a></li>
       </ul>
     </li>
     <li class="dropdown">
@@ -241,7 +243,7 @@ h1 {
 </nav>
 
 <!-- Überschrift -->
-<h1>Finish Line Frames</h1>
+<h1 id="mainTitle">Finish Line Frames</h1>
 
 <!-- Zitat -->
 <p id="quote"></p>
@@ -271,16 +273,21 @@ h1 {
   const quoteElement = document.getElementById("quote");
   quoteElement.innerText = quotes[index];
 
-  setTimeout(() => {
-    quoteElement.classList.add("visible");
-  }, 100);
+  // Fade-In Animation
+  window.addEventListener('load', () => {
+    document.getElementById('mainTitle').style.opacity = '1';
+    document.getElementById('mainTitle').style.transform = 'translateY(0)';
+    quoteElement.style.opacity = '1';
+    quoteElement.style.transform = 'translateY(0)';
+    document.getElementById('bg-video').style.opacity = '1';
+  });
 
   // Mobile Menü Toggle
   const menuBtn = document.getElementById("menuBtn");
   const navLinks = document.getElementById("navLinks");
   menuBtn.addEventListener("click", () => navLinks.classList.toggle("active"));
 
-  // Mobile Dropdown Toggle + Pfeil drehen + Slide Down
+  // Mobile Dropdown Toggle + Pfeil + SlideDown
   const dropdowns = document.querySelectorAll('.nav-links .dropdown');
   dropdowns.forEach(drop => {
     drop.addEventListener('click', (e) => {
