@@ -17,9 +17,9 @@ body {
 
 /* Überschrift */
 h1 {
-  font-size: 60px;
+  font-size: 50px;
   font-weight: 900;
-  letter-spacing: 4px;
+  letter-spacing: 3px;
   text-transform: uppercase;
   color: #FFFFFF;
   text-align: center;
@@ -29,29 +29,37 @@ h1 {
   transition: opacity 1s ease, transform 1s ease;
 }
 
-/* Zitat direkt unter H1 mit Fade-In */
-#quote {
-  font-size: 22px;
-  font-style: italic;
-  text-align: center;
-  margin-top: 15px;
-  margin-bottom: 30px;
+/* Inhalt Bereich (für Zitate, Events, Pictures, Training) */
+#content {
+  max-width: 1000px;
+  margin: 0 auto 50px auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 1.5s ease, transform 1.5s ease;
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
 }
 
-/* Hintergrundvideo */
-#bg-video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 2s ease;
+.card {
+  background: rgba(0,0,0,0.7);
+  padding: 15px 20px;
+  border-radius: 8px;
+  border: 1px solid #00ffcc;
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+.card h3 {
+  margin: 0 0 5px 0;
+}
+
+.card p {
+  margin: 0;
 }
 
 /* Navbar */
@@ -68,14 +76,12 @@ h1 {
   box-sizing: border-box;
 }
 
-/* Logo */
 .logo {
   font-weight: bold;
   font-size: 20px;
   color: white;
 }
 
-/* Menü Links */
 .nav-links {
   list-style: none;
   display: flex;
@@ -85,7 +91,6 @@ h1 {
   position: relative;
 }
 
-/* Dropdown */
 .nav-links li {
   position: relative;
 }
@@ -98,21 +103,15 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: 0.3s;
 }
 
-.nav-links li a:hover {
-  color: #00ffcc;
-}
-
-/* Pfeil */
 .nav-links li a .arrow {
   display: inline-block;
   margin-left: 5px;
   transition: transform 0.3s ease;
 }
 
-/* Untermenü verstecken */
+/* Dropdown Untermenü */
 .nav-links li ul {
   display: none;
   position: absolute;
@@ -128,20 +127,18 @@ h1 {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* Untermenü sichtbar beim Hover (Desktop) */
 .nav-links li:hover > ul {
   display: block;
   opacity: 1;
   transform: translateX(0);
 }
 
-/* Untermenü Links */
 .nav-links li ul li a {
   padding: 8px 15px;
   white-space: nowrap;
 }
 
-/* Hamburger-Button (Mobile) */
+/* Hamburger Button */
 .menu-toggle {
   display: none;
   font-size: 30px;
@@ -151,10 +148,9 @@ h1 {
   user-select: none;
 }
 
-/* Mobile Anpassung */
+/* Mobile */
 @media (max-width: 768px) {
   h1 { font-size: 40px; }
-  #quote { font-size: 18px; }
 
   .menu-toggle { display: block; }
 
@@ -199,6 +195,19 @@ h1 {
 
   .nav-links li a { padding: 10px 15px; }
 }
+
+/* Hintergrundvideo */
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 2s ease;
+}
 </style>
 </head>
 <body>
@@ -209,7 +218,7 @@ h1 {
 
   <ul class="nav-links" id="navLinks">
     <li class="dropdown">
-      <a href="#">Home <span class="arrow">▶</span></a>
+      <a href="index.html">Home <span class="arrow">▶</span></a>
       <ul>
         <li><a href="#">Welcome</a></li>
         <li><a href="#">About</a></li>
@@ -224,9 +233,10 @@ h1 {
       </ul>
     </li>
     <li class="dropdown">
-      <a href="events-running.html">Events <span class="arrow">▶</span></a>
+      <a href="#">Events <span class="arrow">▶</span></a>
       <ul>
-        <li><a href="events-running.html">Running</a></li>
+        <li><a href="#">Running</a></li>
+        <li><a href="#">Cars</a></li>
       </ul>
     </li>
     <li class="dropdown">
@@ -243,10 +253,12 @@ h1 {
 </nav>
 
 <!-- Überschrift -->
-<h1 id="mainTitle">Finish Line Frames</h1>
+<h1 id="mainTitle">Page Title</h1>
 
-<!-- Zitat -->
-<p id="quote"></p>
+<!-- Hauptinhalt (dynamisch) -->
+<div id="content">
+  <!-- Hier kannst du z.B. Events, Zitate oder Bilderkarten einfügen -->
+</div>
 
 <!-- Hintergrundvideo -->
 <video autoplay muted loop playsinline id="bg-video">
@@ -254,31 +266,12 @@ h1 {
 </video>
 
 <script>
-  // Zitate
-  const quotes = [
-    "The first step is always the hardest.",
-    "You don’t have to be fast, you just have to start.",
-    "Run when you can, walk if you have to, never quit.",
-    "Every mile brings you closer to yourself.",
-    "Pain is temporary. Pride is forever.",
-    "Discipline beats motivation.",
-    "Run your own race.",
-    "No excuses. Just run.",
-    "Sweat now, shine later.",
-    "Your only limit is you."
-  ];
-
-  const today = new Date().getDate();
-  const index = today % quotes.length;
-  const quoteElement = document.getElementById("quote");
-  quoteElement.innerText = quotes[index];
-
   // Fade-In Animation
   window.addEventListener('load', () => {
     document.getElementById('mainTitle').style.opacity = '1';
     document.getElementById('mainTitle').style.transform = 'translateY(0)';
-    quoteElement.style.opacity = '1';
-    quoteElement.style.transform = 'translateY(0)';
+    document.getElementById('content').style.opacity = '1';
+    document.getElementById('content').style.transform = 'translateY(0)';
     document.getElementById('bg-video').style.opacity = '1';
   });
 
@@ -304,6 +297,5 @@ h1 {
     });
   });
 </script>
-
 </body>
 </html>
