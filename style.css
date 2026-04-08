@@ -127,4 +127,24 @@ h1 {
     margin: 20px 0;
     text-align: center;
   }
+  #quote {
+  font-size: 22px;
+  font-style: italic;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 30px;
+  opacity: 0;             /* unsichtbar am Anfang */
+  transition: opacity 1.5s ease-in-out; /* sanfter Übergang */
+}
+
+#quote.visible {
+  opacity: 1; /* sichtbar, sobald Klasse "visible" hinzugefügt wird */
+}
+
+/* Mobile Anpassung bleibt unverändert */
+@media (max-width: 768px) {
+  #quote {
+    font-size: 18px;
+  }
+}
 }
