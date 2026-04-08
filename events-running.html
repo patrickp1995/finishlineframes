@@ -1,0 +1,47 @@
+<div id="events"></div>
+
+<script>
+  // Liste der Running-Events: Einfach Datum, Name und Beschreibung hinzufügen
+  const runningEvents = [
+    {
+      name: "City Marathon",
+      date: "20th April 2026",
+      description: "A challenging marathon in New York through the city streets."
+    },
+    {
+      name: "Half Marathon Challenge",
+      date: "10th May 2026",
+      description: "Half marathon in Boston, perfect for beginners and pros alike."
+    },
+    {
+      name: "Trail Run Adventure",
+      date: "5th June 2026",
+      description: "Experience nature with this scenic trail run in Colorado."
+    }
+  ];
+
+  const eventsContainer = document.getElementById("events");
+
+  // Dynamisch die Events-Karten erstellen
+  runningEvents.forEach(event => {
+    const card = document.createElement("div");
+    card.className = "event-card";
+
+    card.innerHTML = `
+      <h3>${event.name}</h3>
+      <p><strong>Date:</strong> ${event.date}</p>
+      <p>${event.description}</p>
+    `;
+
+    eventsContainer.appendChild(card);
+  });
+
+  // Fade-In Animation für Überschrift und Events
+  window.addEventListener('load', () => {
+    document.getElementById('mainTitle').style.opacity = '1';
+    document.getElementById('mainTitle').style.transform = 'translateY(0)';
+    eventsContainer.style.opacity = '1';
+    eventsContainer.style.transform = 'translateY(0)';
+    document.getElementById('bg-video').style.opacity = '1';
+  });
+</script>
