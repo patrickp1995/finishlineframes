@@ -183,7 +183,13 @@ h1 {
   // Tägliches Zitat
   const today = new Date().getDate();
   const index = today % quotes.length;
-  document.getElementById("quote").innerText = quotes[index];
+  const quoteElement = document.getElementById("quote");
+  quoteElement.innerText = quotes[index];
+
+  // Sanftes Fade-In
+  setTimeout(() => {
+    quoteElement.classList.add("visible");
+  }, 100); // kleine Verzögerung für Übergang
 
   // Mobile-Menü Toggle
   const menuBtn = document.getElementById("menuBtn");
