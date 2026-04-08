@@ -143,8 +143,8 @@ h1 {
   display: none;
   font-size: 30px;
   cursor: pointer;
-  color: white;
   z-index: 1001;
+  color: white;
   user-select: none;
 }
 
@@ -219,10 +219,6 @@ h1 {
   <ul class="nav-links" id="navLinks">
     <li class="dropdown">
       <a href="index.html">Home <span class="arrow">▶</span></a>
-      <ul>
-        <li><a href="#">Welcome</a></li>
-        <li><a href="#">About</a></li>
-      </ul>
     </li>
     <li class="dropdown">
       <a href="#">Pictures <span class="arrow">▶</span></a>
@@ -235,8 +231,8 @@ h1 {
     <li class="dropdown">
       <a href="#">Events <span class="arrow">▶</span></a>
       <ul>
-        <li><a href="#">Running</a></li>
-        <li><a href="#">Cars</a></li> <!-- Neues Untermenü Cars unter Events -->
+        <li><a href="events-running.html">Running</a></li>
+        <li><a href="events-cars.html">Cars</a></li> <!-- Verweis auf Car Events -->
       </ul>
     </li>
     <li class="dropdown">
@@ -264,11 +260,11 @@ h1 {
 </video>
 
 <script>
-  // Hier Events eintragen
+  // Running Events eintragen
   const runningEvents = [
     { name: "Linz Marathon 2026", date: "Sonntag, 12. April", description: "A challenging marathon in Linz." },
     { name: "Salzburg Marathon: Running Festival of the City of Mozart", date: "Sonntag, 17. Mai", description: "The PUMA Salzburg Marathon takes place from May 15, 2026 - May 17, 2026, featuring a 5km, 10km, Half Marathon & More." },
-    { name: "Wörthersee Marathon - Ein See. Ein Tag. Dein Marathon.", date: "27. September 2026", description: " „Run the Lake“!" }
+    { name: "Wörthersee Marathon - Ein See. Ein Tag. Dein Marathon.", date: "27. September 2026", description: "„Run the Lake“!" }
   ];
 
   const eventsContainer = document.getElementById("events");
@@ -298,7 +294,7 @@ h1 {
   const navLinks = document.getElementById("navLinks");
   menuBtn.addEventListener("click", () => navLinks.classList.toggle("active"));
 
-  // Mobile Dropdown Toggle + Pfeil + SlideDown
+  // Mobile Dropdown Toggle
   const dropdowns = document.querySelectorAll('.nav-links .dropdown');
   dropdowns.forEach(drop => {
     drop.addEventListener('click', (e) => {
