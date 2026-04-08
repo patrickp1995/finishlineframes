@@ -8,7 +8,7 @@
 /* Basis */
 body {
   margin: 0;
-  padding-top: 70px; /* Platz für feste Menüleiste */
+  padding-top: 70px;
   background-color: black;
   color: white;
   font-family: Arial, sans-serif;
@@ -32,12 +32,12 @@ h1 {
   text-align: center;
   margin-top: 15px;
   margin-bottom: 30px;
-  opacity: 0;             /* unsichtbar am Anfang */
-  transition: opacity 1.5s ease-in-out; /* sanfter Übergang */
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
 }
 
 #quote.visible {
-  opacity: 1; /* sichtbar nach Fade-In */
+  opacity: 1;
 }
 
 /* Hintergrundvideo */
@@ -51,18 +51,18 @@ h1 {
   z-index: -1;
 }
 
-/* Navbar - horizontale Leiste */
+/* Navbar */
 .navbar {
   position: fixed;
   top: 0;
   width: 100%;
   padding: 15px 20px;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0,0,0,0.7);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-sizing: border-box;
   z-index: 1000;
+  box-sizing: border-box;
 }
 
 /* Logo */
@@ -72,20 +72,27 @@ h1 {
   color: white;
 }
 
-/* Menü Links horizontal */
+/* Menü Links */
 .nav-links {
   list-style: none;
   display: flex;
   gap: 20px;
   margin: 0;
-  padding-right: 20px;
-  box-sizing: border-box;
+  padding: 0;
+  position: relative;
+}
+
+/* Dropdown */
+.nav-links li {
+  position: relative;
 }
 
 .nav-links li a {
   color: white;
   text-decoration: none;
   font-size: 16px;
+  padding: 5px 10px;
+  display: block;
   transition: 0.3s;
 }
 
@@ -93,9 +100,33 @@ h1 {
   color: #00ffcc;
 }
 
+/* Untermenü verstecken */
+.nav-links li ul {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: rgba(0,0,0,0.9);
+  list-style: none;
+  padding: 10px 0;
+  min-width: 150px;
+  z-index: 1000;
+}
+
+/* Untermenü Links */
+.nav-links li ul li a {
+  padding: 8px 15px;
+  white-space: nowrap;
+}
+
+/* Untermenü sichtbar beim Hover (Desktop) */
+.nav-links li:hover > ul {
+  display: block;
+}
+
 /* Hamburger-Button (Mobile) */
 .menu-toggle {
-  display: none; /* Desktop: unsichtbar */
+  display: none;
   font-size: 30px;
   cursor: pointer;
   color: white;
@@ -103,43 +134,42 @@ h1 {
   user-select: none;
 }
 
-/* Mobile-Anpassung */
+/* Mobile Anpassung */
 @media (max-width: 768px) {
-  h1 {
-    font-size: 40px;
-  }
+  h1 { font-size: 40px; }
+  #quote { font-size: 18px; }
 
-  #quote {
-    font-size: 18px;
-  }
-
-  .menu-toggle {
-    display: block; /* sichtbar auf Mobile */
-  }
+  .menu-toggle { display: block; }
 
   .nav-links {
     flex-direction: column;
-    gap: 15px;
-    background: rgba(0,0,0,0.9);
     position: fixed;
     top: 70px;
-    right: -100%; /* unsichtbar starten */
+    right: -100%;
     width: 200px;
     height: calc(100% - 70px);
+    background: rgba(0,0,0,0.9);
     padding-top: 20px;
-    padding-right: 0;
+    gap: 15px;
     transition: 0.3s;
-    z-index: 1000;
   }
 
-  .nav-links.active {
-    right: 0; /* sichtbar beim Klick */
+  .nav-links.active { right: 0; }
+
+  .nav-links li ul {
+    position: static;
+    display: none;
+    background: transparent;
+    padding: 0;
   }
 
-  .nav-links li {
-    margin: 20px 0;
-    text-align: center;
+  .nav-links li.active > ul {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
   }
+
+  .nav-links li a { padding: 10px 15px; }
 }
 </style>
 </head>
@@ -151,9 +181,20 @@ h1 {
 
   <ul class="nav-links" id="navLinks">
     <li><a href="#">Home</a></li>
-    <li><a href="#">Quotes</a></li>
-    <li><a href="#">About</a></li>
-    <li><a href="#">Contact</a></li>
+    <li class="dropdown">
+      <a href="#">Pictures ▼</a>
+      <ul>
+        <li><a href="#">Cars</a></li>
+        <li><a href="#">Bikes</a></li>
+        <li><a href="#">Nature</a></li>
+      </ul>
+    </li>
+    <li class="dropdown">
+      <a href="#">Events ▼</a>
+      <ul>
+        <li><a href="#">Running</a></li>
+      </ul>
+    </li>
   </ul>
 
   <div class="menu-toggle" id="menuBtn">☰</div>
@@ -172,7 +213,7 @@ h1 {
 
 <!-- JavaScript -->
 <script>
-  // Liste englischer Lauf-Zitate
+  // Zitate
   const quotes = [
     "The first step is always the hardest.",
     "You don’t have to be fast, you just have to start.",
@@ -186,23 +227,29 @@ h1 {
     "Your only limit is you."
   ];
 
-  // Tägliches Zitat
   const today = new Date().getDate();
   const index = today % quotes.length;
   const quoteElement = document.getElementById("quote");
   quoteElement.innerText = quotes[index];
 
-  // Fade-In für das Zitat
   setTimeout(() => {
     quoteElement.classList.add("visible");
-  }, 100); // kleine Verzögerung für Übergang
+  }, 100);
 
-  // Mobile-Menü Toggle
+  // Mobile Menü Toggle
   const menuBtn = document.getElementById("menuBtn");
   const navLinks = document.getElementById("navLinks");
+  menuBtn.addEventListener("click", () => navLinks.classList.toggle("active"));
 
-  menuBtn.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
+  // Mobile Dropdown Toggle
+  const dropdowns = document.querySelectorAll('.nav-links .dropdown');
+  dropdowns.forEach(drop => {
+    drop.addEventListener('click', (e) => {
+      if (window.innerWidth <= 768) {
+        e.stopPropagation();
+        drop.classList.toggle('active');
+      }
+    });
   });
 </script>
 
