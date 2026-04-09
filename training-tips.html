@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Training Tips | Finish Line Frames</title>
 <style>
-* { box-sizing: border-box; margin:0; padding:0; }
-
+* { box-sizing: border-box; }
 body {
-  font-family: Arial, sans-serif;
+  margin: 0;
+  padding-top: 70px;
   background-color: black;
   color: white;
-  padding-top: 70px;
+  font-family: Arial, sans-serif;
   overflow-x: hidden;
 }
 
@@ -28,7 +28,7 @@ body {
   z-index: 1000;
 }
 .logo { font-weight: bold; font-size: 20px; color: white; }
-.nav-links { list-style: none; display: flex; gap: 20px; }
+.nav-links { list-style: none; display: flex; gap: 20px; margin:0; padding:0; }
 .nav-links li { position: relative; }
 .nav-links li a { color:white; text-decoration:none; font-size:16px; padding:5px 10px; display:flex; align-items:center; justify-content:space-between; }
 .nav-links li a:hover { color: #00ffcc; }
@@ -54,10 +54,9 @@ body {
 /* Überschrift */
 h1 { font-size:50px; font-weight:900; text-align:center; margin:20px 0 10px; }
 
-/* Content Box */
+/* Textbereich */
 #content {
   max-width: 900px;
-  width: 90%;
   margin: 30px auto;
   padding: 20px;
   background: rgba(0,0,0,0.7);
@@ -65,12 +64,19 @@ h1 { font-size:50px; font-weight:900; text-align:center; margin:20px 0 10px; }
   border-radius: 10px;
   font-size: 18px;
   line-height: 1.6;
-  word-wrap: break-word;
 }
 
 /* Herzfrequenz-Tabelle */
-#hr-table { margin-top:20px; width:100%; border-collapse: collapse; }
-#hr-table th, #hr-table td { border: 1px solid #00ffcc; padding:10px; text-align:center; }
+#hr-table {
+  margin-top: 20px;
+  width: 100%;
+  border-collapse: collapse;
+}
+#hr-table th, #hr-table td {
+  border: 1px solid #00ffcc;
+  padding: 10px;
+  text-align: center;
+}
 #hr-table th { background: rgba(0,255,204,0.1); }
 
 /* Hintergrundvideo */
@@ -78,43 +84,17 @@ h1 { font-size:50px; font-weight:900; text-align:center; margin:20px 0 10px; }
 
 /* Mobile Anpassung */
 @media(max-width:768px){
-  h1 { font-size:35px; }
+  h1{ font-size:35px; }
   .menu-toggle{ display:block; }
-  .nav-links {
-    flex-direction:column;
-    position:fixed;
-    top:70px;
-    right:-100%;
-    width:220px;
-    height:calc(100%-70px);
-    background:rgba(0,0,0,0.9);
-    padding-top:20px;
-    gap:15px;
-    transition:0.3s;
-    overflow-y:auto;
+  .nav-links{
+    flex-direction:column; position:fixed; top:70px; right:-100%; width:220px; height:calc(100%-70px); background:rgba(0,0,0,0.9);
+    padding-top:20px; gap:15px; transition:0.3s; overflow-y:auto;
   }
   .nav-links.active{ right:0; }
-  .nav-links li ul {
-    position:static;
-    display:none;
-    background:transparent;
-    padding:0;
-    opacity:1;
-    transform:translateX(0);
-    max-height:0;
-    overflow:hidden;
-    transition:max-height 0.3s ease;
-  }
-  .nav-links li.active > ul{
-    display:flex;
-    flex-direction:column;
-    gap:5px;
-    max-height:500px;
-  }
+  .nav-links li ul{ position:static; display:none; background:transparent; padding:0; opacity:1; transform:translateX(0); max-height:0; overflow:hidden; transition:max-height 0.3s ease; }
+  .nav-links li.active > ul{ display:flex; flex-direction:column; gap:5px; max-height:500px; }
   .nav-links li.active > a .arrow{ transform:rotate(90deg); }
-
-  /* Content mobile */
-  #content { width: 95%; font-size:16px; padding:15px; margin: 20px auto; }
+  #content { font-size:16px; padding:15px; }
 }
 </style>
 </head>
@@ -123,27 +103,32 @@ h1 { font-size:50px; font-weight:900; text-align:center; margin:20px 0 10px; }
 <!-- Navbar -->
 <nav class="navbar">
   <div class="logo">Finish Line Frames</div>
+
   <ul class="nav-links" id="navLinks">
-    <li class="dropdown"><a href="#">Home <span class="arrow">▶</span></a>
+    <li class="dropdown">
+      <a href="#">Home <span class="arrow">▶</span></a>
       <ul>
         <li><a href="#">Welcome</a></li>
         <li><a href="#">About</a></li>
       </ul>
     </li>
-    <li class="dropdown"><a href="#">Pictures <span class="arrow">▶</span></a>
+    <li class="dropdown">
+      <a href="#">Pictures <span class="arrow">▶</span></a>
       <ul>
         <li><a href="#">Cars</a></li>
         <li><a href="#">Bikes</a></li>
         <li><a href="#">Nature</a></li>
       </ul>
     </li>
-    <li class="dropdown"><a href="#">Events <span class="arrow">▶</span></a>
+    <li class="dropdown">
+      <a href="#">Events <span class="arrow">▶</span></a>
       <ul>
         <li><a href="events-running.html">Running</a></li>
         <li><a href="events-cars.html">Cars</a></li>
       </ul>
     </li>
-    <li class="dropdown"><a href="#">Training <span class="arrow">▶</span></a>
+    <li class="dropdown">
+      <a href="#">Training <span class="arrow">▶</span></a>
       <ul>
         <li><a href="training-plans.html">Plans</a></li>
         <li><a href="training-tips.html">Tips</a></li>
@@ -157,9 +142,11 @@ h1 { font-size:50px; font-weight:900; text-align:center; margin:20px 0 10px; }
 <h1>Training Tips</h1>
 
 <div id="content">
-  <p><strong>Warum langsames Laufen besser ist:</strong> Ein moderates Tempo erlaubt dem Körper, die Ausdauer effizient aufzubauen, Fett als Energiequelle zu nutzen und reduziert das Verletzungsrisiko. Es stärkt das Herz-Kreislauf-System ohne Überlastung.</p>
+  <p><strong>Warum langsames Laufen besser ist:</strong>  
+  Ein moderates Tempo erlaubt dem Körper, die Ausdauer effizient aufzubauen, Fett als Energiequelle zu nutzen und reduziert das Verletzungsrisiko. Es stärkt das Herz-Kreislauf-System ohne Überlastung.</p>
 
-  <p><strong>Herzfrequenz beachten:</strong> Trainiere im optimalen Herzfrequenzbereich, um die Ausdauer zu steigern. Für die Grundlagenausdauer liegt dieser Bereich bei 60–75% der maximalen Herzfrequenz (MaxHF). So verbesserst du deine Fitness effektiv.</p>
+  <p><strong>Herzfrequenz beachten:</strong>  
+  Trainiere im optimalen Herzfrequenzbereich, um die Ausdauer zu steigern. Für die Grundlagenausdauer liegt dieser Bereich bei 60–75% der maximalen Herzfrequenz (MaxHF). So verbesserst du deine Fitness effektiv.</p>
 
   <p><strong>Tipps:</strong>
   <ul>
@@ -173,10 +160,26 @@ h1 { font-size:50px; font-weight:900; text-align:center; margin:20px 0 10px; }
 
   <h2>Herzfrequenzbereiche für Ausdauertraining</h2>
   <table id="hr-table">
-    <tr><th>Level</th><th>% MaxHF</th><th>Beschreibung</th></tr>
-    <tr><td>Anfänger</td><td>60–65%</td><td>Langsames Tempo, Fokus auf Grundlagenausdauer</td></tr>
-    <tr><td>Fortgeschritten</td><td>65–75%</td><td>Moderates Tempo, Verbesserung der Ausdauer</td></tr>
-    <tr><td>Profi</td><td>75–85%</td><td>Tempo erhöhen, Intensität für Leistungsausbau</td></tr>
+    <tr>
+      <th>Level</th>
+      <th>% MaxHF</th>
+      <th>Beschreibung</th>
+    </tr>
+    <tr>
+      <td>Anfänger</td>
+      <td>60–65%</td>
+      <td>Langsames Tempo, Fokus auf Grundlagenausdauer</td>
+    </tr>
+    <tr>
+      <td>Fortgeschritten</td>
+      <td>65–75%</td>
+      <td>Moderates Tempo, Verbesserung der Ausdauer</td>
+    </tr>
+    <tr>
+      <td>Profi</td>
+      <td>75–85%</td>
+      <td>Tempo erhöhen, Intensität für Leistungsausbau</td>
+    </tr>
   </table>
 </div>
 
