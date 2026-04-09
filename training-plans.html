@@ -4,46 +4,88 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Training Plans | Finish Line Frames</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* Zusätzliche Styles für Trainingsplan Grid */
+#training-plan {
+  max-width: 1000px;
+  margin: 50px auto 50px auto;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: 120px;
+  gap: 10px;
+}
 
-<link href="style.css" rel="stylesheet">
+#training-plan .day {
+  background: rgba(0,0,0,0.7);
+  border: 1px solid #00ffcc;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+  transition: transform 0.2s;
+}
+
+#training-plan .day:hover {
+  transform: scale(1.05);
+}
+
+.week-title {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 900;
+  margin-bottom: 5px;
+}
+</style>
 </head>
-
 <body>
 
-<!-- NAVBAR -->
+<!-- Navbar -->
 <nav class="navbar">
-  <div>Finish Line Frames</div>
-
+  <div class="logo">Finish Line Frames</div>
   <ul class="nav-links" id="navLinks">
-    <li><a href="index.html">Home</a></li>
-
-    <li>
-      <a href="#">Pictures</a>
+    <li class="dropdown">
+      <a href="index.html">Home <span class="arrow">▶</span></a>
+      <ul>
+        <li><a href="#">Welcome</a></li>
+        <li><a href="#">About</a></li>
+      </ul>
+    </li>
+    <li class="dropdown">
+      <a href="#">Pictures <span class="arrow">▶</span></a>
       <ul>
         <li><a href="#">Cars</a></li>
         <li><a href="#">Bikes</a></li>
         <li><a href="#">Nature</a></li>
       </ul>
     </li>
-
-    <li>
-      <a href="#">Events</a>
+    <li class="dropdown">
+      <a href="#">Events <span class="arrow">▶</span></a>
       <ul>
         <li><a href="events-running.html">Running</a></li>
         <li><a href="events-cars.html">Cars</a></li>
       </ul>
     </li>
-
-    <li>
-      <a href="#">Training</a>
+    <li class="dropdown">
+      <a href="#">Training <span class="arrow">▶</span></a>
       <ul>
         <li><a href="training-plans.html">Plans</a></li>
+        <li><a href="#">Tips</a></li>
+        <li><a href="#">Nutrition</a></li>
       </ul>
     </li>
   </ul>
-
-  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  <div class="menu-toggle" id="menuBtn">☰</div>
 </nav>
+
+<h1 id="mainTitle">5-Week Training Plan</h1>
+<p id="quote"></p>
 
 <h1>Halbmarathon Trainingsplan - Ziel 1:43</h1>
 
@@ -108,13 +150,61 @@
 
 </div>
 
-</div>
 
+<video autoplay muted loop playsinline id="bg-video">
+  <source src="sport.mp4" type="video/mp4">
+</video>
 
 <script>
-function toggleMenu() {
-  document.getElementById("navLinks").classList.toggle("active");
-}
+  // Zitate
+  const quotes = [
+    "The first step is always the hardest.",
+    "You don’t have to be fast, you just have to start.",
+    "Run when you can, walk if you have to, never quit.",
+    "Every mile brings you closer to yourself.",
+    "Pain is temporary. Pride is forever.",
+    "Discipline beats motivation.",
+    "Run your own race.",
+    "No excuses. Just run.",
+    "Sweat now, shine later.",
+    "Your only limit is you."
+  ];
+
+  const today = new Date().getDate();
+  const index = today % quotes.length;
+  const quoteElement = document.getElementById("quote");
+  quoteElement.innerText = quotes[index];
+
+  // Fade-In Animation
+  window.addEventListener('load', () => {
+    document.getElementById('mainTitle').style.opacity = '1';
+    document.getElementById('mainTitle').style.transform = 'translateY(0)';
+    quoteElement.style.opacity = '1';
+    quoteElement.style.transform = 'translateY(0)';
+    document.getElementById('bg-video').style.opacity = '1';
+  });
+
+  // Mobile Menü Toggle
+  const menuBtn = document.getElementById("menuBtn");
+  const navLinks = document.getElementById("navLinks");
+  menuBtn.addEventListener("click", () => navLinks.classList.toggle("active"));
+
+  // Mobile Dropdown Toggle + Pfeil + SlideDown
+  const dropdowns = document.querySelectorAll('.nav-links .dropdown');
+  dropdowns.forEach(drop => {
+    drop.addEventListener('click', (e) => {
+      if (window.innerWidth <= 768) {
+        e.stopPropagation();
+        const subMenu = drop.querySelector('ul');
+        drop.classList.toggle('active');
+        if (drop.classList.contains('active')) {
+          subMenu.style.maxHeight = subMenu.scrollHeight + "px";
+        } else {
+          subMenu.style.maxHeight = "0";
+        }
+      }
+    });
+  });
 </script>
 
 </body>
