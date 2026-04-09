@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>5-Week Training Plan | Finish Line Frames</title>
 <style>
-/* Basis */
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -56,23 +55,36 @@ body {
 h1 { font-size:50px; font-weight:900; text-align:center; margin:20px 0 10px; }
 
 /* Trainingsplan Grid */
-#training-plan { max-width: 1000px; margin:30px auto; display: grid; grid-template-columns: repeat(7, 1fr); gap:10px; }
+#training-plan { 
+  max-width: 1000px; 
+  margin:30px auto; 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); 
+  gap:10px; 
+}
 .week-title { grid-column: 1 / -1; text-align:center; font-size:22px; font-weight:900; margin:10px 0; }
 .day {
-  background: rgba(0,0,0,0.7);
   border: 2px solid #00ffcc;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding:10px;
+  padding:5px;
   aspect-ratio: 1/1;
   text-align:center;
   font-weight:bold;
-  font-size:14px;
+  font-size:12px;
   transition: transform 0.2s;
+  color: white;
 }
+
+/* Farben nach Typ */
+.day.run { background-color: #1E90FF; }        /* Blau für Run */
+.day.rest { background-color: #555; }          /* Dunkelgrau für Rest */
+.day.long { background-color: #32CD32; }       /* Grün für Long Run */
+.day.cross { background-color: #FFA500; }      /* Orange für Cross */
+.day.stretch { background-color: #800080; }    /* Lila für Stretch */
 .day:hover { transform: scale(1.05); }
 
 /* Hintergrundvideo */
@@ -80,7 +92,7 @@ h1 { font-size:50px; font-weight:900; text-align:center; margin:20px 0 10px; }
 
 /* Mobile Anpassung */
 @media(max-width:768px){
-  h1{ font-size:40px; }
+  h1{ font-size:35px; }
   .menu-toggle{ display:block; }
   .nav-links{
     flex-direction:column; position:fixed; top:70px; right:-100%; width:220px; height:calc(100%-70px); background:rgba(0,0,0,0.9);
@@ -90,6 +102,7 @@ h1 { font-size:50px; font-weight:900; text-align:center; margin:20px 0 10px; }
   .nav-links li ul{ position:static; display:none; background:transparent; padding:0; opacity:1; transform:translateX(0); max-height:0; overflow:hidden; transition:max-height 0.3s ease; }
   .nav-links li.active > ul{ display:flex; flex-direction:column; gap:5px; max-height:500px; }
   .nav-links li.active > a .arrow{ transform:rotate(90deg); }
+  .day{ font-size:11px; padding:3px; }
 }
 </style>
 </head>
@@ -112,67 +125,58 @@ h1 { font-size:50px; font-weight:900; text-align:center; margin:20px 0 10px; }
   <div class="menu-toggle" id="menuBtn">☰</div>
 </nav>
 
-<h1>Halbmarathon Trainingsplan - Ziel 1:43</h1>
+<h1>5-Week Training Plan</h1>
 
-<div id="plans">
+<div id="training-plan">
+  <!-- Woche 1 -->
+  <div class="week-title">Week 1</div>
+  <div class="day run">Mon<br>Run 5km</div>
+  <div class="day rest">Tue<br>Rest</div>
+  <div class="day run">Wed<br>Run 7km</div>
+  <div class="day cross">Thu<br>Cross</div>
+  <div class="day run">Fri<br>Run 5km</div>
+  <div class="day long">Sat<br>Long Run 10km</div>
+  <div class="day stretch">Sun<br>Stretch</div>
 
-<div class="training-plan">
+  <!-- Woche 2 -->
+  <div class="week-title">Week 2</div>
+  <div class="day run">Mon<br>Run 6km</div>
+  <div class="day rest">Tue<br>Rest</div>
+  <div class="day run">Wed<br>Run 8km</div>
+  <div class="day cross">Thu<br>Cross</div>
+  <div class="day run">Fri<br>Run 6km</div>
+  <div class="day long">Sat<br>Long Run 12km</div>
+  <div class="day stretch">Sun<br>Stretch</div>
 
-<h4>Week 1</h4>
-<div class="training-plan">
-<div>Mon<span>Rest</span></div>
-<div>Tue<span>10 km locker Pace 6:30-6:45 Puls 145-155 Strategie ruhig konstant, kein Endspurt</span></div>
-<div>Wed<span>Rest</span></div>
-<div>Thu<span>5 km Tempo Pace 5:15-5:20 Puls 165-175 Strategie kontrolliert starten, gleichmäßig</span></div>
-<div>Fri<span>Rest</span></div>
-<div>Sat<span>18 km Long Run Pace 6:05-6:20 Puls 155-165 Strategie Finish schneller ab km 14</span></div>
-<div>Sun<span>6 km Recovery Pace 6:45-7:00 Puls <150 Strategie sehr locker<</span></div>
-</div>
+  <!-- Woche 3 -->
+  <div class="week-title">Week 3</div>
+  <div class="day run">Mon<br>Run 6km</div>
+  <div class="day rest">Tue<br>Rest</div>
+  <div class="day run">Wed<br>Run 9km</div>
+  <div class="day cross">Thu<br>Cross</div>
+  <div class="day run">Fri<br>Run 6km</div>
+  <div class="day long">Sat<br>Long Run 14km</div>
+  <div class="day stretch">Sun<br>Stretch</div>
 
-<h4>Week 2</h4>
-<div class="week-grid">
-<div>Mon<span>Rest</span></div>
-<div>Tue<span>10 km locker Pace 6:30-6:45 Puls 145-155 Strategie locker bleiben</span></div>
-<div>Wed<span>Rest</span></div>
-<div>Thu<span>6 km Tempo Pace 5:15 Puls 168-175 Strategie konstant ohne Einbruch</span></div>
-<div>Fri<span>Rest</span></div>
-<div>Sat<span>18 km progressiv Pace 6:10->5:50 Puls 155-165 Strategie letzte 5km steigern</span></div>
-<div>Sun<span>6 km Recovery Pace 6:45-7:00 Puls <150 Strategie Erholung<</span></div>
-</div>
+  <!-- Woche 4 -->
+  <div class="week-title">Week 4</div>
+  <div class="day run">Mon<br>Run 7km</div>
+  <div class="day rest">Tue<br>Rest</div>
+  <div class="day run">Wed<br>Run 10km</div>
+  <div class="day cross">Thu<br>Cross</div>
+  <div class="day run">Fri<br>Run 7km</div>
+  <div class="day long">Sat<br>Long Run 16km</div>
+  <div class="day stretch">Sun<br>Stretch</div>
 
-<h4>Week 3</h4>
-<div class="week-grid">
-<div>Mon<span>Rest</span></div>
-<div>Tue<span>9-10 km locker Pace 6:30-6:45 Puls 145-155 Strategie ruhig</span></div>
-<div>Wed<span>Rest</span></div>
-<div>Thu<span>5 km Tempo Pace 5:10-5:15 Puls 170-176 Strategie keicht fordernd</span></div>
-<div>Fri<span>Rest</span></div>
-<div>Sat<span>17 km Long Run Pace 6:05->5:50 Puls 155-165 Strategie starkes Finish</span></div>
-<div>Sun<span>6 km Recovery Pace 6:45-7:00 Puls <150 Strategie locker<</span></div>
-</div>
-
-<h4>Week 4(Taper)</h4>
-<div class="week-grid">
-<div>Mon<span>Rest</span></div>
-<div>Tue<span>8-9 km locker Pace 6:30-6:45 Puls 145-150 Strategie entspannt</span></div>
-<div>Wed<span>Rest</span></div>
-<div>Thu<span>4 km Tempo Pace 5:10-5:15 Puls 165-172 Strategie locker schnell</span></div>
-<div>Fri<span>Rest</span></div>
-<div>Sat<span>14-15 km progressiv Pace 6:25 Puls 150-160 Strategie keine Belastung</span></div>
-<div>Sun<span>5-6 km Recovery Pace 6:45-7:00 Puls <150 Strategie wehr locker<</span></div>
-</div>
-
-<h4>Week 5(Race)</h4>
-<div class="week-grid">
-<div>Mon<span>Rest</span></div>
-<div>Tue<span>8 km locker Pace 6:30-6:45 Puls 145-150 Strategie locker</span></div>
-<div>Wed<span>Rest</span></div>
-<div>Thu<span>3 km Tempo Pace 5:00-5:05 Puls 165-170 Strategie kurz aktiv</span></div>
-<div>Fri<span>Rest</span></div>
-<div>Sat<span>4-5 km progressiv Pace 6:45 Puls <145 Strategie Beine lockern</span></div>
-<div>Sun<span>Race Pace 4:54 Puls 170-180 Strategie negativ Split<</span></div>
-</div>
-
+  <!-- Woche 5 -->
+  <div class="week-title">Week 5</div>
+  <div class="day run">Mon<br>Run 8km</div>
+  <div class="day rest">Tue<br>Rest</div>
+  <div class="day run">Wed<br>Run 10km</div>
+  <div class="day cross">Thu<br>Cross</div>
+  <div class="day run">Fri<br>Run 8km</div>
+  <div class="day long">Sat<br>Long Run 18km</div>
+  <div class="day stretch">Sun<br>Stretch</div>
 </div>
 
 <video autoplay muted loop playsinline id="bg-video">
@@ -200,4 +204,3 @@ dropdowns.forEach(drop=>{
 
 </body>
 </html>
-
