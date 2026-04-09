@@ -20,6 +20,7 @@ body {
 h1 {
   font-size: 50px;
   font-weight: 900;
+  letter-spacing: 3px;
   text-transform: uppercase;
   text-align: center;
   margin: 20px 0 10px 0;
@@ -28,7 +29,7 @@ h1 {
   transition: 1s;
 }
 
-/* Content Bereich */
+/* Bereich */
 #plans {
   max-width: 1000px;
   margin: auto;
@@ -46,7 +47,7 @@ h1 {
   background: rgba(0,0,0,0.7);
   border: 1px solid #00ffcc;
   border-radius: 8px;
-  padding: 15px;
+  padding: 15px 20px;
   transition: 0.3s;
 }
 
@@ -54,7 +55,7 @@ h1 {
   transform: scale(1.02);
 }
 
-/* Navbar */
+/* Navbar (gleich wie deine anderen Seiten!) */
 .navbar {
   position: fixed;
   top: 0;
@@ -67,7 +68,10 @@ h1 {
   z-index: 1000;
 }
 
-.logo { font-weight: bold; }
+.logo {
+  font-weight: bold;
+  font-size: 20px;
+}
 
 /* Menü */
 .nav-links {
@@ -76,23 +80,38 @@ h1 {
   gap: 20px;
 }
 
-.nav-links li { position: relative; }
+.nav-links li {
+  position: relative;
+}
 
 .nav-links a {
   color: white;
   text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+/* Pfeil */
+.arrow {
+  margin-left: 5px;
 }
 
 /* Dropdown */
 .nav-links li ul {
   display: none;
   position: absolute;
-  background: black;
-  padding: 10px;
+  background: rgba(0,0,0,0.9);
+  padding: 10px 0;
+  list-style: none;
+  min-width: 150px;
 }
 
 .nav-links li:hover ul {
   display: block;
+}
+
+.nav-links li ul li a {
+  padding: 8px 15px;
 }
 
 /* Mobile */
@@ -110,13 +129,16 @@ h1 {
     position: fixed;
     right: -100%;
     top: 70px;
-    background: black;
-    width: 200px;
+    width: 220px;
     height: 100%;
+    background: rgba(0,0,0,0.9);
+    padding-top: 20px;
     transition: 0.3s;
   }
 
-  .nav-links.active { right:0; }
+  .nav-links.active {
+    right: 0;
+  }
 }
 
 /* Video */
@@ -141,10 +163,16 @@ h1 {
   <div class="logo">Finish Line Frames</div>
 
   <ul class="nav-links" id="navLinks">
-    <li><a href="index.html">Home</a></li>
+    <li class="dropdown">
+      <a href="index.html">Home <span class="arrow">▶</span></a>
+      <ul>
+        <li><a href="#">Welcome</a></li>
+        <li><a href="#">About</a></li>
+      </ul>
+    </li>
 
-    <li>
-      <a href="#">Pictures</a>
+    <li class="dropdown">
+      <a href="#">Pictures <span class="arrow">▶</span></a>
       <ul>
         <li><a href="#">Cars</a></li>
         <li><a href="#">Bikes</a></li>
@@ -152,16 +180,16 @@ h1 {
       </ul>
     </li>
 
-    <li>
-      <a href="#">Events</a>
+    <li class="dropdown">
+      <a href="#">Events <span class="arrow">▶</span></a>
       <ul>
         <li><a href="events-running.html">Running</a></li>
         <li><a href="events-cars.html">Cars</a></li>
       </ul>
     </li>
 
-    <li>
-      <a href="#">Training</a>
+    <li class="dropdown">
+      <a href="#">Training <span class="arrow">▶</span></a>
       <ul>
         <li><a href="training-plans.html">Plans</a></li>
         <li><a href="#">Tips</a></li>
@@ -173,13 +201,13 @@ h1 {
   <div class="menu-toggle" id="menuBtn">☰</div>
 </nav>
 
-<!-- ÜBERSCHRIFT -->
+<!-- Titel -->
 <h1 id="title">Training Plans</h1>
 
-<!-- PLANS -->
+<!-- Inhalte -->
 <div id="plans"></div>
 
-<!-- VIDEO -->
+<!-- Video -->
 <video autoplay muted loop playsinline id="bg-video">
   <source src="sport.mp4" type="video/mp4">
 </video>
@@ -189,15 +217,15 @@ h1 {
 const plans = [
   {
     name: "Beginner 5K Plan",
-    description: "Perfect plan for beginners to reach their first 5K."
+    description: "Start running from zero and reach your first 5K."
   },
   {
-    name: "10K Improvement Plan",
-    description: "Improve your endurance and speed over 10K."
+    name: "10K Performance Plan",
+    description: "Improve endurance and speed for your next race."
   },
   {
     name: "Half Marathon Plan",
-    description: "Structured plan to prepare for a half marathon."
+    description: "Structured weekly plan to finish strong."
   }
 ];
 
