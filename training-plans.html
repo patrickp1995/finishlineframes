@@ -15,74 +15,56 @@ body {
   background-color: black;
   color: white;
   font-family: Arial, sans-serif;
-  overflow-x: hidden;
 }
 
-/* Überschrift */
+/* Titel */
 h1 {
-  font-size: 50px;
-  font-weight: 900;
   text-align: center;
-  margin: 20px 0 10px 0;
-  opacity: 0;
-  transform: translateY(-20px);
-  transition: 1s;
+  margin: 20px 0;
+  font-size: 50px;
 }
 
-/* Bereich */
+/* Plan */
 #plans {
   max-width: 1100px;
   margin: auto;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: 1s;
 }
 
-/* Karten */
+/* Karte */
 .plan-card {
   background: rgba(0,0,0,0.7);
   border: 1px solid #00ffcc;
   border-radius: 8px;
   padding: 20px;
-  transition: 0.3s;
 }
 
-.plan-card:hover {
-  transform: scale(1.02);
+/* Wochen */
+.plan-card h4 {
+  margin-top: 20px;
+  color: #00ffcc;
 }
 
-/* Wochenplan */
+/* Grid */
 .week-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 10px;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 .week-grid div {
-  background: rgba(255,255,255,0.05);
   border: 1px solid #00ffcc;
   padding: 10px;
   text-align: center;
   border-radius: 6px;
-  font-size: 14px;
-  transition: 0.3s;
-}
-
-.week-grid div:hover {
-  background: rgba(0,255,204,0.2);
-  transform: scale(1.05);
+  background: rgba(255,255,255,0.05);
 }
 
 .week-grid span {
   display: block;
   margin-top: 5px;
   font-size: 12px;
-  color: #ccc;
 }
 
 /* Navbar */
@@ -94,22 +76,12 @@ h1 {
   background: rgba(0,0,0,0.7);
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  z-index: 1000;
 }
 
-.logo {
-  font-weight: bold;
-  font-size: 20px;
-}
-
-/* Menü */
 .nav-links {
-  list-style: none;
   display: flex;
   gap: 20px;
-  margin: 0;
-  padding: 0;
+  list-style: none;
 }
 
 .nav-links li {
@@ -119,64 +91,43 @@ h1 {
 .nav-links a {
   color: white;
   text-decoration: none;
-  padding: 5px 10px;
-  display: flex;
-  align-items: center;
 }
 
-.arrow {
-  margin-left: 5px;
-}
-
-/* Dropdown */
 .nav-links li ul {
   display: none;
   position: absolute;
-  top: 100%;
-  left: 0;
-  background: rgba(0,0,0,0.9);
-  list-style: none;
-  padding: 10px 0;
-  min-width: 150px;
+  background: black;
+  padding: 10px;
 }
 
-.nav-links li:hover > ul {
+.nav-links li:hover ul {
   display: block;
 }
 
-.nav-links li ul li a {
-  padding: 8px 15px;
-}
-
-/* Hamburger */
+/* Mobile */
 .menu-toggle {
   display: none;
   font-size: 30px;
-  cursor: pointer;
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-  h1 { font-size: 40px; }
-
-  .menu-toggle { display: block; }
+@media(max-width:768px){
+  .menu-toggle { display:block; }
 
   .nav-links {
     flex-direction: column;
     position: fixed;
-    top: 70px;
     right: -100%;
-    width: 220px;
-    height: calc(100% - 70px);
-    background: rgba(0,0,0,0.9);
-    padding-top: 20px;
+    top: 70px;
+    background: black;
+    width: 200px;
+    height: 100%;
     transition: 0.3s;
   }
 
-  .nav-links.active { right: 0; }
+  .nav-links.active { right:0; }
 
   .week-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2,1fr);
   }
 }
 
@@ -189,8 +140,6 @@ h1 {
   height:100%;
   object-fit:cover;
   z-index:-1;
-  opacity:0;
-  transition:2s;
 }
 </style>
 </head>
@@ -199,15 +148,13 @@ h1 {
 
 <!-- NAVBAR -->
 <nav class="navbar">
-  <div class="logo">Finish Line Frames</div>
+  <div>Finish Line Frames</div>
 
   <ul class="nav-links" id="navLinks">
-    <li class="dropdown">
-      <a href="index.html">Home <span class="arrow">▶</span></a>
-    </li>
+    <li><a href="index.html">Home</a></li>
 
-    <li class="dropdown">
-      <a href="#">Pictures <span class="arrow">▶</span></a>
+    <li>
+      <a href="#">Pictures</a>
       <ul>
         <li><a href="#">Cars</a></li>
         <li><a href="#">Bikes</a></li>
@@ -215,80 +162,99 @@ h1 {
       </ul>
     </li>
 
-    <li class="dropdown">
-      <a href="#">Events <span class="arrow">▶</span></a>
+    <li>
+      <a href="#">Events</a>
       <ul>
         <li><a href="events-running.html">Running</a></li>
         <li><a href="events-cars.html">Cars</a></li>
       </ul>
     </li>
 
-    <li class="dropdown">
-      <a href="#">Training <span class="arrow">▶</span></a>
+    <li>
+      <a href="#">Training</a>
       <ul>
         <li><a href="training-plans.html">Plans</a></li>
-        <li><a href="#">Tips</a></li>
-        <li><a href="#">Nutrition</a></li>
       </ul>
     </li>
   </ul>
 
-  <div class="menu-toggle" id="menuBtn">☰</div>
+  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
 </nav>
 
-<!-- Titel -->
-<h1 id="title">Training Plans</h1>
+<h1>5 Week 5K Plan</h1>
 
-<!-- PLÄNE -->
 <div id="plans">
 
-  <div class="plan-card">
-    <h3>Beginner 5K Plan</h3>
-    <div class="week-grid">
-      <div>Mon<span>Rest</span></div>
-      <div>Tue<span>3 km Easy</span></div>
-      <div>Wed<span>Rest</span></div>
-      <div>Thu<span>3 km Run</span></div>
-      <div>Fri<span>Rest</span></div>
-      <div>Sat<span>4 km Long</span></div>
-      <div>Sun<span>Walk</span></div>
-    </div>
-  </div>
+<div class="plan-card">
 
-  <div class="plan-card">
-    <h3>10K Plan</h3>
-    <div class="week-grid">
-      <div>Mon<span>Rest</span></div>
-      <div>Tue<span>5 km Easy</span></div>
-      <div>Wed<span>Intervals</span></div>
-      <div>Thu<span>Rest</span></div>
-      <div>Fri<span>6 km</span></div>
-      <div>Sat<span>Long Run</span></div>
-      <div>Sun<span>Recovery</span></div>
-    </div>
-  </div>
+<h4>Week 1</h4>
+<div class="week-grid">
+<div>Mon<span>Rest</span></div>
+<div>Tue<span>2 km</span></div>
+<div>Wed<span>Rest</span></div>
+<div>Thu<span>2 km</span></div>
+<div>Fri<span>Rest</span></div>
+<div>Sat<span>3 km</span></div>
+<div>Sun<span>Walk</span></div>
+</div>
+
+<h4>Week 2</h4>
+<div class="week-grid">
+<div>Mon<span>Rest</span></div>
+<div>Tue<span>3 km</span></div>
+<div>Wed<span>Rest</span></div>
+<div>Thu<span>3 km</span></div>
+<div>Fri<span>Rest</span></div>
+<div>Sat<span>4 km</span></div>
+<div>Sun<span>Walk</span></div>
+</div>
+
+<h4>Week 3</h4>
+<div class="week-grid">
+<div>Mon<span>Rest</span></div>
+<div>Tue<span>4 km</span></div>
+<div>Wed<span>Intervals</span></div>
+<div>Thu<span>Rest</span></div>
+<div>Fri<span>4 km</span></div>
+<div>Sat<span>5 km</span></div>
+<div>Sun<span>Recovery</span></div>
+</div>
+
+<h4>Week 4</h4>
+<div class="week-grid">
+<div>Mon<span>Rest</span></div>
+<div>Tue<span>5 km</span></div>
+<div>Wed<span>Intervals</span></div>
+<div>Thu<span>Rest</span></div>
+<div>Fri<span>5 km</span></div>
+<div>Sat<span>6 km</span></div>
+<div>Sun<span>Recovery</span></div>
+</div>
+
+<h4>Week 5</h4>
+<div class="week-grid">
+<div>Mon<span>Rest</span></div>
+<div>Tue<span>3 km</span></div>
+<div>Wed<span>Light Run</span></div>
+<div>Thu<span>Rest</span></div>
+<div>Fri<span>2 km</span></div>
+<div>Sat<span>REST</span></div>
+<div>Sun<span>RACE 🏁</span></div>
+</div>
+
+</div>
 
 </div>
 
 <!-- VIDEO -->
 <video autoplay muted loop playsinline id="bg-video">
-  <source src="sport.mp4" type="video/mp4">
+<source src="sport.mp4" type="video/mp4">
 </video>
 
 <script>
-// Animation
-window.onload = () => {
-  document.getElementById("title").style.opacity = "1";
-  document.getElementById("title").style.transform = "translateY(0)";
-  document.getElementById("plans").style.opacity = "1";
-  document.getElementById("plans").style.transform = "translateY(0)";
-  document.getElementById("bg-video").style.opacity = "1";
-};
-
-// Menü Toggle
-document.getElementById("menuBtn").onclick = () => {
+function toggleMenu() {
   document.getElementById("navLinks").classList.toggle("active");
-};
+}
 </script>
 
 </body>
