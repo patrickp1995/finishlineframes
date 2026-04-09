@@ -55,16 +55,19 @@ body {
 h1 { font-size:50px; font-weight:900; text-align:center; margin:20px 0 10px; }
 
 /* Textbereich */
+/* Textbereich */
 #content {
-  max-width: 900px;
-  margin: 30px auto;
+  max-width: 850px;                /* etwas kleiner für Mobilgeräte */
+  margin: 30px 10px 30px 10px;     /* links/rechts Platz */
   padding: 20px;
   background: rgba(0,0,0,0.7);
   border: 2px solid #00ffcc;
   border-radius: 10px;
   font-size: 18px;
   line-height: 1.6;
+  overflow-wrap: break-word;       /* Text läuft nicht aus der Box */
 }
+
 
 /* Herzfrequenz-Tabelle */
 #hr-table {
