@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Training Plans | Finish Line Frames</title>
+
+<style>
+/* Basis */
+body {
+  margin: 0;
+  padding-top: 70px;
+  background-color: black;
+  color: white;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Überschrift */
+h1 {
+  font-size: 50px;
+  font-weight: 900;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 20px 0 10px 0;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: 1s;
+}
+
+/* Content Bereich */
+#plans {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 1s;
+}
+
+/* Karten */
+.plan-card {
+  background: rgba(0,0,0,0.7);
+  border: 1px solid #00ffcc;
+  border-radius: 8px;
+  padding: 15px;
+  transition: 0.3s;
+}
+
+.plan-card:hover {
+  transform: scale(1.02);
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 15px 20px;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+}
+
+.logo { font-weight: bold; }
+
+/* Menü */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links li { position: relative; }
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+}
+
+/* Dropdown */
+.nav-links li ul {
+  display: none;
+  position: absolute;
+  background: black;
+  padding: 10px;
+}
+
+.nav-links li:hover ul {
+  display: block;
+}
+
+/* Mobile */
+.menu-toggle {
+  display: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+@media (max-width:768px){
+  .menu-toggle { display:block; }
+
+  .nav-links {
+    flex-direction: column;
+    position: fixed;
+    right: -100%;
+    top: 70px;
+    background: black;
+    width: 200px;
+    height: 100%;
+    transition: 0.3s;
+  }
+
+  .nav-links.active { right:0; }
+}
+
+/* Video */
+#bg-video {
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-1;
+  opacity:0;
+  transition:2s;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo">Finish Line Frames</div>
+
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+
+    <li>
+      <a href="#">Pictures</a>
+      <ul>
+        <li><a href="#">Cars</a></li>
+        <li><a href="#">Bikes</a></li>
+        <li><a href="#">Nature</a></li>
+      </ul>
+    </li>
+
+    <li>
+      <a href="#">Events</a>
+      <ul>
+        <li><a href="events-running.html">Running</a></li>
+        <li><a href="events-cars.html">Cars</a></li>
+      </ul>
+    </li>
+
+    <li>
+      <a href="#">Training</a>
+      <ul>
+        <li><a href="training-plans.html">Plans</a></li>
+        <li><a href="#">Tips</a></li>
+        <li><a href="#">Nutrition</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <div class="menu-toggle" id="menuBtn">☰</div>
+</nav>
+
+<!-- ÜBERSCHRIFT -->
+<h1 id="title">Training Plans</h1>
+
+<!-- PLANS -->
+<div id="plans"></div>
+
+<!-- VIDEO -->
+<video autoplay muted loop playsinline id="bg-video">
+  <source src="sport.mp4" type="video/mp4">
+</video>
+
+<script>
+// HIER DEINE TRAININGSPLÄNE EINTRAGEN
+const plans = [
+  {
+    name: "Beginner 5K Plan",
+    description: "Perfect plan for beginners to reach their first 5K."
+  },
+  {
+    name: "10K Improvement Plan",
+    description: "Improve your endurance and speed over 10K."
+  },
+  {
+    name: "Half Marathon Plan",
+    description: "Structured plan to prepare for a half marathon."
+  }
+];
+
+// Anzeigen
+const container = document.getElementById("plans");
+
+plans.forEach(plan => {
+  const card = document.createElement("div");
+  card.className = "plan-card";
+  card.innerHTML = `
+    <h3>${plan.name}</h3>
+    <p>${plan.description}</p>
+  `;
+  container.appendChild(card);
+});
+
+// Animation
+window.onload = () => {
+  document.getElementById("title").style.opacity = "1";
+  document.getElementById("title").style.transform = "translateY(0)";
+  container.style.opacity = "1";
+  container.style.transform = "translateY(0)";
+  document.getElementById("bg-video").style.opacity = "1";
+};
+
+// Mobile Menü
+document.getElementById("menuBtn").onclick = () => {
+  document.getElementById("navLinks").classList.toggle("active");
+};
+</script>
+
+</body>
+</html>
