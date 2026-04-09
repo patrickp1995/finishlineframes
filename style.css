@@ -1,10 +1,13 @@
+/* style.css */
+
 /* Basis */
 body {
   margin: 0;
-  padding-top: 70px; /* Platz für feste Menüleiste */
+  padding-top: 70px;
   background-color: black;
   color: white;
   font-family: Arial, sans-serif;
+  overflow-x: hidden;
 }
 
 /* Überschrift */
@@ -16,15 +19,21 @@ h1 {
   color: #FFFFFF;
   text-align: center;
   margin: 20px 0 10px 0;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 1s ease, transform 1s ease;
 }
 
-/* Zitat direkt unter H1 */
+/* Zitat unter H1 */
 #quote {
   font-size: 22px;
   font-style: italic;
   text-align: center;
   margin-top: 15px;
   margin-bottom: 30px;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 1.5s ease, transform 1.5s ease;
 }
 
 /* Hintergrundvideo */
@@ -36,20 +45,22 @@ h1 {
   height: 100%;
   object-fit: cover;
   z-index: -1;
+  opacity: 0;
+  transition: opacity 2s ease;
 }
 
-/* Navbar - horizontale Leiste */
+/* Navbar */
 .navbar {
   position: fixed;
   top: 0;
   width: 100%;
   padding: 15px 20px;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0,0,0,0.7);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-sizing: border-box;
   z-index: 1000;
+  box-sizing: border-box;
 }
 
 /* Logo */
@@ -59,20 +70,29 @@ h1 {
   color: white;
 }
 
-/* Menü Links horizontal */
+/* Menü Links */
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 20px; /* Abstand zwischen Links */
+  gap: 20px;
   margin: 0;
-  padding-right: 20px; /* letzter Link sichtbar */
-  box-sizing: border-box;
+  padding: 0;
+  position: relative;
+}
+
+/* Dropdown */
+.nav-links li {
+  position: relative;
 }
 
 .nav-links li a {
   color: white;
   text-decoration: none;
   font-size: 16px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   transition: 0.3s;
 }
 
@@ -80,9 +100,45 @@ h1 {
   color: #00ffcc;
 }
 
+/* Pfeil */
+.nav-links li a .arrow {
+  display: inline-block;
+  margin-left: 5px;
+  transition: transform 0.3s ease;
+}
+
+/* Untermenü verstecken */
+.nav-links li ul {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: rgba(0,0,0,0.9);
+  list-style: none;
+  padding: 10px 0;
+  min-width: 150px;
+  z-index: 1000;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Untermenü sichtbar beim Hover (Desktop) */
+.nav-links li:hover > ul {
+  display: block;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Untermenü Links */
+.nav-links li ul li a {
+  padding: 8px 15px;
+  white-space: nowrap;
+}
+
 /* Hamburger-Button (Mobile) */
 .menu-toggle {
-  display: none; /* Desktop: unsichtbar */
+  display: none;
   font-size: 30px;
   cursor: pointer;
   color: white;
@@ -90,71 +146,51 @@ h1 {
   user-select: none;
 }
 
-/* Mobile-Anpassung */
+/* Mobile Anpassung */
 @media (max-width: 768px) {
-  h1 {
-    font-size: 40px;
-  }
+  h1 { font-size: 40px; }
+  #quote { font-size: 18px; }
 
-  #quote {
-    font-size: 18px;
-  }
-
-  .menu-toggle {
-    display: block; /* sichtbar auf Mobile */
-  }
+  .menu-toggle { display: block; }
 
   .nav-links {
     flex-direction: column;
-    gap: 15px;
-    background: rgba(0,0,0,0.9);
     position: fixed;
     top: 70px;
-    right: -100%; /* unsichtbar starten */
-    width: 200px;
+    right: -100%;
+    width: 220px;
     height: calc(100% - 70px);
+    background: rgba(0,0,0,0.9);
     padding-top: 20px;
-    padding-right: 0;
+    gap: 15px;
     transition: 0.3s;
-    z-index: 1000;
+    overflow-y: auto;
   }
 
-  .nav-links.active {
-    right: 0; /* sichtbar beim Klick */
+  .nav-links.active { right: 0; }
+
+  .nav-links li ul {
+    position: static;
+    display: none;
+    background: transparent;
+    padding: 0;
+    opacity: 1;
+    transform: translateX(0);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
   }
 
-  .nav-links li {
-    margin: 20px 0;
-    text-align: center;
+  .nav-links li.active > ul {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    max-height: 500px;
   }
-  #quote {
-  font-size: 22px;
-  font-style: italic;
-  text-align: center;
-  margin-top: 15px;
-  margin-bottom: 30px;
-  opacity: 0;             /* unsichtbar am Anfang */
-  transition: opacity 1.5s ease-in-out; /* sanfter Übergang */
-}
 
-#quote.visible {
-  opacity: 1; /* sichtbar, sobald Klasse "visible" hinzugefügt wird */
-}
-  </div>
-
-</div>
-
-
-/* Mobile */
-@media (max-width: 768px) {
-  .week-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .nav-links li.active > a .arrow {
+    transform: rotate(90deg);
   }
-}
-/* Mobile Anpassung bleibt unverändert */
-@media (max-width: 768px) {
-  #quote {
-    font-size: 18px;
-  }
-}
+
+  .nav-links li a { padding: 10px 15px; }
 }
