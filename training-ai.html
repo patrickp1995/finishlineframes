@@ -1,353 +1,281 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Training AI Pro | Finish Line Frames</title>
+<title>Training AI | Finish Line Frames</title>
 
 <style>
+/* ================= BASE ================= */
 body {
   margin: 0;
   padding-top: 70px;
   background: black;
   color: white;
   font-family: Arial, sans-serif;
+  overflow-x: hidden;
 }
 
+h1 {
+  text-align: center;
+  font-size: 50px;
+  margin: 20px 0;
+}
+
+/* ================= NAVBAR (IDENTICAL) ================= */
 .navbar {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 15px;
-  background: rgba(0,0,0,0.8);
+  padding: 15px 20px;
+  background: rgba(0,0,0,0.75);
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  box-sizing: border-box;
 }
 
-.container {
-  max-width: 1000px;
-  margin: auto;
-  padding: 20px;
+.logo {
+  font-weight: bold;
+  font-size: 20px;
 }
 
-h1 { text-align: center; }
-
-/* BUTTONS */
-.btns {
+.nav-links {
+  list-style: none;
   display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  position: relative;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nav-links li ul {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: rgba(0,0,0,0.95);
+  padding: 10px;
+  min-width: 160px;
+}
+
+.nav-links li:hover ul {
+  display: block;
+}
+
+.arrow {
+  font-size: 12px;
+}
+
+/* ================= BUTTONS ================= */
+.buttons {
+  display: flex;
   justify-content: center;
+  gap: 15px;
+  margin: 20px;
 }
 
 button {
-  padding: 12px 18px;
-  border: 1px solid #00ffcc;
-  background: transparent;
-  color: white;
-  cursor: pointer;
-}
-
-button:hover {
+  padding: 12px 20px;
+  border: none;
   background: #00ffcc;
-  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
 }
 
-/* WEEK */
+/* ================= PLAN ================= */
+.container {
+  max-width: 900px;
+  margin: auto;
+}
+
 .week {
-  border: 1px solid #00ffcc;
-  margin: 15px 0;
+  background: rgba(255,255,255,0.05);
+  margin: 20px 0;
   padding: 15px;
   border-radius: 10px;
-  background: rgba(255,255,255,0.03);
 }
 
 .day {
-  margin: 8px 0;
+  background: rgba(255,255,255,0.08);
+  margin: 10px 0;
   padding: 10px;
-  background: rgba(0,0,0,0.4);
-  border-radius: 6px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
-.meta {
-  font-size: 12px;
-  color: #00ffcc;
-  margin-top: 5px;
+.detail {
+  display: none;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #ccc;
 }
 </style>
 </head>
 
 <body>
 
-<div class="navbar">
-  <div><b>Training AI PRO</b></div>
+<!-- ================= NAV ================= -->
+<nav class="navbar">
+  <div class="logo">Finish Line Frames</div>
+
+  <ul class="nav-links">
+    <li><a href="index.html">Home ▶</a></li>
+
+    <li>
+      <a href="#">Pictures ▶</a>
+      <ul>
+        <li><a href="#">Cars</a></li>
+        <li><a href="#">Bikes</a></li>
+        <li><a href="#">Nature</a></li>
+      </ul>
+    </li>
+
+    <li>
+      <a href="#">Events ▶</a>
+      <ul>
+        <li><a href="events-running.html">Running</a></li>
+        <li><a href="events-cars.html">Cars</a></li>
+      </ul>
+    </li>
+
+    <li>
+      <a href="#">Training ▶</a>
+      <ul>
+        <li><a href="training-ai.html">AI Plan</a></li>
+        <li><a href="training-plans.html">Plans</a></li>
+        <li><a href="training-tips.html">Tips</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+<!-- ================= TITLE ================= -->
+<h1>Training AI Coach</h1>
+
+<!-- ================= BUTTONS ================= -->
+<div class="buttons">
+  <button onclick="generate('5k')">5K Plan</button>
+  <button onclick="generate('10k')">10K Plan</button>
+  <button onclick="generate('marathon')">Marathon Plan</button>
 </div>
 
-<div class="container">
-
-<h1>Trainingspläne mit Strategie</h1>
-
-<div class="btns">
-  <button onclick="generate('5k')">5K</button>
-  <button onclick="generate('10k')">10K</button>
-  <button onclick="generate('hm')">HM</button>
-  <button onclick="generate('m')">MARATHON</button>
-</div>
-
-<div id="out"></div>
-
-</div>
+<!-- ================= OUTPUT ================= -->
+<div class="container" id="output"></div>
 
 <script>
 
-function unit(name, pace, hr, goal, strategy){
+function generate(type) {
 
-  return `
-    <div class="day">
-      <b>${name}</b><br>
-      🎯 Ziel: ${goal}<br>
-      🏃 Pace: ${pace} min/km<br>
-      ❤️ HF: ${hr}% max<br>
-      🧠 Strategie: ${strategy}
-    </div>
-  `;
-}
-
-// =========================
-// GENERATOR
-// =========================
-
-function generate(type){
-
-  let weeks = [];
-
-  if(type === "5k"){
-    for(let w=1; w<=6; w++){
-
-      weeks.push({
-        title: "Woche " + w,
-        days: [
-          unit("Easy Run",
-            "6:00 - 6:40",
-            "65-75",
-            "Grundlagenausdauer",
-            "Fettverbrennung + aerobe Basis aufbauen"),
-
-          unit("Intervalle " + (4+w) + "x400m",
-            "4:15 - 4:45",
-            "85-92",
-            "Speed & VO2max",
-            "Laktatschwelle verbessern, schnelle Fasern aktivieren"),
-
-          unit("Ruhetag",
-            "-",
-            "unter 60",
-            "Regeneration",
-            "Muskeln reparieren"),
-
-          unit("Tempo Run 3-4 km",
-            "4:50 - 5:10",
-            "80-88",
-            "Wettkampftempo",
-            "5K Pace stabilisieren"),
-
-          unit("Easy Run",
-            "6:10",
-            "65",
-            "Erholung",
-            "aktive Regeneration"),
-
-          unit("Long Run 6-8 km",
-            "5:50 - 6:30",
-            "70-75",
-            "Ausdauer",
-            "aerobe Kapazität erweitern"),
-
-          unit("Ruhetag",
-            "-",
-            "-",
-            "Erholung",
-            "Adaptation")
-        ]
-      });
-    }
-  }
-
-  if(type === "10k"){
-    for(let w=1; w<=8; w++){
-
-      weeks.push({
-        title: "Woche " + w,
-        days: [
-          unit("Easy Run",
-            "5:50 - 6:30",
-            "65-75",
-            "Grundlage",
-            "aerobe Effizienz"),
-
-          unit("Intervalle 5x800m",
-            "4:30 - 5:00",
-            "85-92",
-            "VO2max",
-            "Sauerstoffaufnahme steigern"),
-
-          unit("Ruhetag",
-            "-",
-            "unter 60",
-            "Erholung",
-            "Superkompensation"),
-
-          unit("Tempo Run 5-6 km",
-            "4:45 - 5:10",
-            "80-88",
-            "10K Race Pace",
-            "Schwelle erhöhen"),
-
-          unit("Recovery Run",
-            "6:10 - 6:50",
-            "65",
-            "Regeneration",
-            "Durchblutung fördern"),
-
-          unit("Long Run",
-            "5:40 - 6:20",
-            "70-75",
-            "Ausdauer",
-            "Fettstoffwechsel"),
-
-          unit("Ruhetag",
-            "-",
-            "-",
-            "Erholung",
-            "Erholung sichern")
-        ]
-      });
-    }
-  }
-
-  if(type === "hm"){
-    for(let w=1; w<=10; w++){
-
-      weeks.push({
-        title: "Woche " + w,
-        days: [
-          unit("Easy Run",
-            "5:50 - 6:40",
-            "65-75",
-            "Basis",
-            "aerobe Stabilität"),
-
-          unit("Intervalle 6x800m",
-            "4:25 - 4:55",
-            "85-92",
-            "VO2max",
-            "Herzleistung verbessern"),
-
-          unit("Ruhetag",
-            "-",
-            "unter 60",
-            "Erholung",
-            "Muskelreparatur"),
-
-          unit("Tempo Run 8-12 km",
-            "4:50 - 5:20",
-            "80-88",
-            "Race Simulation",
-            "Halbmarathon Pace stabilisieren"),
-
-          unit("Recovery",
-            "6:10 - 6:50",
-            "65",
-            "Regeneration",
-            "aktive Erholung"),
-
-          unit("Long Run",
-            "5:40 - 6:30",
-            "70-80",
-            "Ausdauer",
-            "Energieeffizienz Fett/Carb"),
-
-          unit("Ruhetag",
-            "-",
-            "-",
-            "Erholung",
-            "Adaptation")
-        ]
-      });
-    }
-  }
-
-  if(type === "m"){
-    for(let w=1; w<=14; w++){
-
-      weeks.push({
-        title: "Woche " + w,
-        days: [
-          unit("Easy Run",
-            "5:50 - 6:50",
-            "65-75",
-            "Basis",
-            "aerobe Kapazität"),
-
-          unit("Intervalle 6x1000m",
-            "4:20 - 4:50",
-            "85-92",
-            "VO2max",
-            "Sauerstoffeffizienz"),
-
-          unit("Ruhetag",
-            "-",
-            "unter 60",
-            "Erholung",
-            "Regeneration"),
-
-          unit("Marathon Tempo Run",
-            "5:00 - 5:30",
-            "80-85",
-            "Race Pace",
-            "Wettkampfsimulation"),
-
-          unit("Recovery Run",
-            "6:10 - 7:00",
-            "65",
-            "Erholung",
-            "Durchblutung"),
-
-          unit("Long Run",
-            "5:40 - 6:40",
-            "70-80",
-            "Ausdauer",
-            "Fettstoffwechsel + mentale Stärke"),
-
-          unit("Ruhetag",
-            "-",
-            "-",
-            "Erholung",
-            "Superkompensation")
-        ]
-      });
-    }
-  }
-
-  render(weeks);
-}
-
-function render(weeks){
-
+  let weeks = 8;
   let html = "";
 
-  weeks.forEach(w => {
+  for (let w = 1; w <= weeks; w++) {
 
     html += `<div class="week">
-      <h2>${w.title}</h2>
-    `;
+      <h2>Week ${w} - ${type.toUpperCase()}</h2>`;
 
-    w.days.forEach(d => html += d);
+    let baseKm =
+      type === "5k" ? 3 :
+      type === "10k" ? 6 :
+      12;
+
+    for (let d = 1; d <= 6; d++) {
+
+      let session = getSession(d, baseKm, type, w);
+
+      html += `
+      <div class="day" onclick="toggle(this)">
+        <strong>${session.name}</strong>
+
+        <div class="detail">
+          <p>📏 Distance: ${session.km} km</p>
+          <p>🏃 Pace: ${session.pace} min/km</p>
+          <p>❤️ HR: ${session.hr} bpm</p>
+          <p>🎯 Goal: ${session.goal}</p>
+          <p>🧠 Strategy: ${session.strategy}</p>
+        </div>
+      </div>`;
+    }
 
     html += `</div>`;
-  });
+  }
 
-  document.getElementById("out").innerHTML = html;
+  document.getElementById("output").innerHTML = html;
+}
+
+function getSession(day, baseKm, type, week) {
+
+  const sessions = [
+    {
+      name: "Recovery Run",
+      km: baseKm - 1,
+      pace: "6:30 - 7:30",
+      hr: "120-140",
+      goal: "Regeneration",
+      strategy: "Easy pace to recover"
+    },
+    {
+      name: "Intervals",
+      km: baseKm,
+      pace: "4:30 - 5:00",
+      hr: "160-180",
+      goal: "Speed",
+      strategy: "Short fast repeats"
+    },
+    {
+      name: "Rest Day",
+      km: 0,
+      pace: "-",
+      hr: "-",
+      goal: "Rest",
+      strategy: "Full recovery"
+    },
+    {
+      name: "Tempo Run",
+      km: baseKm + 1,
+      pace: "5:00 - 5:30",
+      hr: "150-170",
+      goal: "Threshold",
+      strategy: "Controlled hard effort"
+    },
+    {
+      name: "Easy Run",
+      km: baseKm,
+      pace: "6:00 - 6:45",
+      hr: "130-150",
+      goal: "Base endurance",
+      strategy: "Comfortable run"
+    },
+    {
+      name: "Long Run",
+      km: baseKm + week,
+      pace: "5:45 - 6:30",
+      hr: "140-155",
+      goal: "Endurance",
+      strategy: "Slow long distance"
+    }
+  ];
+
+  return sessions[day - 1];
+}
+
+function toggle(el) {
+  let d = el.querySelector(".detail");
+  d.style.display = d.style.display === "block" ? "none" : "block";
 }
 
 </script>
