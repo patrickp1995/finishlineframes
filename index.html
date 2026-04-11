@@ -3,308 +3,214 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Finish Line Frames</title>
-<meta name="description" content="Trainingspläne,Fotografie,Laufen, Motivation,Events .">  
+<title>Navbar Pro Design</title>
+
 <style>
-/* Basis */
 body {
   margin: 0;
-  padding-top: 70px;
-  background-color: black;
-  color: white;
   font-family: Arial, sans-serif;
-  overflow-x: hidden;
+  background: #000;
+  color: white;
 }
 
-/* Überschrift */
-h1 {
-  font-size: 60px;
-  font-weight: 900;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: #FFFFFF;
-  text-align: center;
-  margin: 20px 0 10px 0;
-  opacity: 0;
-  transform: translateY(-20px);
-  transition: opacity 1s ease, transform 1s ease;
-}
-
-/* Zitat unter H1 */
-#quote {
-  font-size: 22px;
-  font-style: italic;
-  text-align: center;
-  margin-top: 15px;
-  margin-bottom: 30px;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 1.5s ease, transform 1.5s ease;
-}
-
-/* Hintergrundvideo */
-#bg-video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 2s ease;
-}
-
-/* Navbar */
+/* ================= NAVBAR ================= */
 .navbar {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 15px 20px;
-  background: rgba(0,0,0,0.7);
+  height: 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 1000;
+  padding: 0 25px;
   box-sizing: border-box;
+
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  z-index: 1000;
 }
 
-/* Logo */
+/* LOGO */
 .logo {
-  font-weight: bold;
-  font-size: 20px;
-  color: white;
+  font-weight: 800;
+  letter-spacing: 2px;
+  font-size: 18px;
 }
 
-/* Menü Links */
+/* LINKS */
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 20px;
+  gap: 25px;
   margin: 0;
   padding: 0;
-  position: relative;
 }
 
-/* Dropdown */
 .nav-links li {
   position: relative;
 }
 
-.nav-links li a {
-  color: white;
+.nav-links a {
   text-decoration: none;
-  font-size: 16px;
-  padding: 5px 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: 0.3s;
+  color: white;
+  font-size: 15px;
+  position: relative;
+  padding: 5px 0;
 }
 
-.nav-links li a:hover {
-  color: #00ffcc;
-}
-
-/* Pfeil */
-.nav-links li a .arrow {
-  display: inline-block;
-  margin-left: 5px;
-  transition: transform 0.3s ease;
-}
-
-/* Untermenü verstecken */
-.nav-links li ul {
-  display: none;
+/* underline animation */
+.nav-links a::after {
+  content: "";
   position: absolute;
-  top: 100%;
+  left: 0;
+  bottom: -3px;
+  width: 0%;
+  height: 2px;
+  background: #00ffcc;
+  transition: 0.3s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* DROPDOWN */
+.dropdown-menu {
+  position: absolute;
+  top: 35px;
   left: 0;
   background: rgba(0,0,0,0.9);
-  list-style: none;
-  padding: 10px 0;
-  min-width: 150px;
-  z-index: 1000;
-  opacity: 0;
-  transform: translateX(-20px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+
+  min-width: 160px;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-/* Untermenü sichtbar beim Hover (Desktop) */
-.nav-links li:hover > ul {
-  display: block;
-  opacity: 1;
-  transform: translateX(0);
+.dropdown-menu a {
+  padding: 10px 15px;
+  font-size: 14px;
 }
 
-/* Untermenü Links */
-.nav-links li ul li a {
-  padding: 8px 15px;
-  white-space: nowrap;
+.dropdown-menu a:hover {
+  background: rgba(255,255,255,0.08);
 }
 
-/* Hamburger-Button (Mobile) */
+/* show dropdown */
+.dropdown:hover .dropdown-menu {
+  display: flex;
+}
+
+/* ================= MOBILE ================= */
 .menu-toggle {
   display: none;
-  font-size: 30px;
+  font-size: 28px;
   cursor: pointer;
-  color: white;
-  z-index: 1001;
-  user-select: none;
 }
 
-/* Mobile Anpassung */
 @media (max-width: 768px) {
-  h1 { font-size: 40px; }
-  #quote { font-size: 18px; }
 
-  .menu-toggle { display: block; }
+  .menu-toggle {
+    display: block;
+  }
 
   .nav-links {
-    flex-direction: column;
     position: fixed;
     top: 70px;
     right: -100%;
-    width: 220px;
-    height: calc(100% - 70px);
-    background: rgba(0,0,0,0.9);
-    padding-top: 20px;
-    gap: 15px;
-    transition: 0.3s;
-    overflow-y: auto;
+    width: 250px;
+    height: calc(100vh - 70px);
+    background: rgba(0,0,0,0.95);
+    flex-direction: column;
+    gap: 20px;
+    padding: 30px;
+    transition: 0.3s ease;
   }
 
-  .nav-links.active { right: 0; }
+  .nav-links.active {
+    right: 0;
+  }
 
-  .nav-links li ul {
+  .dropdown-menu {
     position: static;
     display: none;
-    background: transparent;
-    padding: 0;
-    opacity: 1;
-    transform: translateX(0);
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
+    background: none;
+    border: none;
   }
 
-  .nav-links li.active > ul {
+  .dropdown.active .dropdown-menu {
     display: flex;
-    flex-direction: column;
-    gap: 5px;
-    max-height: 500px;
   }
-
-  .nav-links li.active > a .arrow {
-    transform: rotate(90deg);
-  }
-
-  .nav-links li a { padding: 10px 15px; }
 }
 </style>
 </head>
+
 <body>
 
-<!-- Navbar -->
+<!-- NAVBAR -->
 <nav class="navbar">
-  <div class="logo">Finish Line Frames</div>
+
+  <div class="logo">🏁 FLF</div>
 
   <ul class="nav-links" id="navLinks">
+
+    <li><a href="index.html">Home</a></li>
+
     <li class="dropdown">
-      <a href="#">Home <span class="arrow">▶</span></a>
-      <ul>
-        <li><a href="index.html">Welcome</a></li>
-        <li><a href="about.html">About</a></li>
-      </ul>
+      <a href="#">Pictures</a>
+      <div class="dropdown-menu">
+        <a href="#">Cars</a>
+        <a href="#">Bikes</a>
+        <a href="#">Nature</a>
+      </div>
     </li>
+
     <li class="dropdown">
-      <a href="#">Pictures <span class="arrow">▶</span></a>
-      <ul>
-        <li><a href="#">Cars</a></li>
-        <li><a href="#">Bikes</a></li>
-        <li><a href="#">Nature</a></li>
-      </ul>
+      <a href="#">Events</a>
+      <div class="dropdown-menu">
+        <a href="events-running.html">Running</a>
+        <a href="events-cars.html">Cars</a>
+      </div>
     </li>
+
     <li class="dropdown">
-      <a href="#">Events <span class="arrow">▶</span></a>
-      <ul>
-        <li><a href="events-running.html">Running</a></li>
-        <li><a href="events-cars.html">Cars</a></li>
-      </ul>
+      <a href="#">Training</a>
+      <div class="dropdown-menu">
+        <a href="training-plans.html">Plans</a>
+        <a href="training-tips.html">Tips</a>
+        <a href="#">Nutrition</a>
+      </div>
     </li>
-    <li class="dropdown">
-      <a href="#">Training <span class="arrow">▶</span></a>
-      <ul>
-        <li><a href="training-plans.html">Plans</a></li>
-        <li><a href="training-tips.html">Tips</a></li>
-        <li><a href="#">Nutrition</a></li>
-      </ul>
-    </li>
+
   </ul>
 
   <div class="menu-toggle" id="menuBtn">☰</div>
 </nav>
 
-<!-- Überschrift -->
-<h1 id="mainTitle">Finish Line Frames</h1>
-
-<!-- Zitat -->
-<p id="quote"></p>
-
-<!-- Hintergrundvideo -->
-<video autoplay muted loop playsinline id="bg-video">
-  <source src="sport.mp4" type="video/mp4">
-</video>
-
 <script>
-  // Zitate
-  const quotes = [
-    "The first step is always the hardest.",
-    "You don’t have to be fast, you just have to start.",
-    "Run when you can, walk if you have to, never quit.",
-    "Every mile brings you closer to yourself.",
-    "Pain is temporary. Pride is forever.",
-    "Discipline beats motivation.",
-    "Run your own race.",
-    "No excuses. Just run.",
-    "Sweat now, shine later.",
-    "Your only limit is you."
-  ];
 
-  const today = new Date().getDate();
-  const index = today % quotes.length;
-  const quoteElement = document.getElementById("quote");
-  quoteElement.innerText = quotes[index];
+// mobile menu toggle
+const menuBtn = document.getElementById("menuBtn");
+const navLinks = document.getElementById("navLinks");
 
-  // Fade-In Animation
-  window.addEventListener('load', () => {
-    document.getElementById('mainTitle').style.opacity = '1';
-    document.getElementById('mainTitle').style.transform = 'translateY(0)';
-    quoteElement.style.opacity = '1';
-    quoteElement.style.transform = 'translateY(0)';
-    document.getElementById('bg-video').style.opacity = '1';
+menuBtn.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
+
+// mobile dropdown toggle
+document.querySelectorAll(".dropdown").forEach(drop => {
+  drop.addEventListener("click", () => {
+    if (window.innerWidth <= 768) {
+      drop.classList.toggle("active");
+    }
   });
+});
 
-  // Mobile Menü Toggle
-  const menuBtn = document.getElementById("menuBtn");
-  const navLinks = document.getElementById("navLinks");
-  menuBtn.addEventListener("click", () => navLinks.classList.toggle("active"));
-
-  // Mobile Dropdown Toggle + Pfeil + SlideDown
-  const dropdowns = document.querySelectorAll('.nav-links .dropdown');
-  dropdowns.forEach(drop => {
-    drop.addEventListener('click', (e) => {
-      if (window.innerWidth <= 768) {
-        e.stopPropagation();
-        const subMenu = drop.querySelector('ul');
-        drop.classList.toggle('active');
-        if (drop.classList.contains('active')) {
-          subMenu.style.maxHeight = subMenu.scrollHeight + "px";
-        } else {
-          subMenu.style.maxHeight = "0";
-        }
-      }
-    });
-  });
 </script>
 
 </body>
