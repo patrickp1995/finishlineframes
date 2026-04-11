@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creating Plans AI | Finish Line Frames</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #020617;
+  color: white;
+  margin: 0;
+  padding: 20px;
+}
+
+/* Container */
+.container {
+  max-width: 900px;
+  margin: auto;
+}
+
+/* Cards */
+.card {
+  background: #0f172a;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+
+/* Light Mode */
+.light {
+  background: #f1f5f9;
+  color: black;
+}
+.light .card {
+  background: white;
+}
+
+/* Inputs */
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 8px;
+  border: none;
+}
+
+/* Buttons */
+button {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: none;
+  border-radius: 8px;
+  background: #22c55e;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Calendar */
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.day {
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  background: #020617;
+}
+
+.light .day {
+  background: #e2e8f0;
+}
+
+.done {
+  background: #22c55e !important;
+  color: black;
+}
+
+/* Progress */
+.progress {
+  background: #333;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 20px;
+  background: #22c55e;
+  width: 0%;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🏃‍♂️ Creating Plans AI</h2>
+
+<!-- Input Bereich -->
+<div class="card">
+  <select id="goal">
+    <option value="5k">5 km</option>
+    <option value="10k">10 km</option>
+    <option value="half">Halbmarathon</option>
+  </select>
+
+  <input id="km" placeholder="Aktuelles Niveau (km)">
+  <input id="hf" placeholder="Max Herzfrequenz">
+  <input id="time" placeholder="Zielzeit (optional)">
+
+  <button onclick="generate()">Plan erstellen</button>
+  <button onclick="toggleTheme()">🌗 Dark/Light</button>
+</div>
+
+<!-- Woche -->
+<div class="card">
+  <h3>📅 Woche <span id="weekNr">1</span></h3>
+
+  <button onclick="prevWeek()">⬅️</button>
+  <button onclick="nextWeek()">➡️</button>
+
+  <div class="calendar" id="calendar"></div>
+</div>
+
+<!-- Fortschritt -->
+<div class="card">
+  <h3>📊 Fortschritt</h3>
+  <div class="progress">
+    <div class="progress-bar" id="bar"></div>
+  </div>
+  <p id="percent"></p>
+</div>
+
+</div>
+
+<script>
+
+let fullPlan = [];
+let done = [];
+let currentWeek = 0;
+
+function generate() {
+  let km = parseInt(document.getElementById("km").value) || 5;
+
+  fullPlan = [];
+  done = [];
+
+  for (let w = 0; w < 5; w++) {
+
+    let week = [
+      "Locker " + km + " km",
+      "Intervalle",
+      "Ruhetag",
+      "Tempo Lauf",
+      "Ruhetag",
+      "Long Run " + (km + 2) + " km",
+      "Erholung"
+    ];
+
+    fullPlan.push(week);
+    done.push(new Array(7).fill(false));
+
+    km += 1;
+  }
+
+  currentWeek = 0;
+  render();
+  save();
+}
+
+function render() {
+  let week = fullPlan[currentWeek] || [];
+  let html = "";
+
+  for (let i = 0; i < 7; i++) {
+    html += `<div class="day ${done[currentWeek]?.[i] ? "done" : ""}" onclick="toggle(${i})">
+      ${week[i] || "-"}
+    </div>`;
+  }
+
+  document.getElementById("calendar").innerHTML = html;
+  document.getElementById("weekNr").innerText = currentWeek + 1;
+
+  updateProgress();
+}
+
+function toggle(i) {
+  done[currentWeek][i] = !done[currentWeek][i];
+  render();
+  save();
+}
+
+function updateProgress() {
+  let count = done[currentWeek].filter(x => x).length;
+  let percent = Math.round((count / 7) * 100);
+
+  document.getElementById("bar").style.width = percent + "%";
+  document.getElementById("percent").innerText = percent + "%";
+}
+
+function nextWeek() {
+  if (currentWeek < fullPlan.length - 1) {
+    currentWeek++;
+    render();
+  }
+}
+
+function prevWeek() {
+  if (currentWeek > 0) {
+    currentWeek--;
+    render();
+  }
+}
+
+function toggleTheme() {
+  document.body.classList.toggle("light");
+}
+
+function save() {
+  localStorage.setItem("planAI", JSON.stringify(fullPlan));
+  localStorage.setItem("doneAI", JSON.stringify(done));
+  localStorage.setItem("weekAI", currentWeek);
+}
+
+function load() {
+  let p = JSON.parse(localStorage.getItem("planAI"));
+  let d = JSON.parse(localStorage.getItem("doneAI"));
+  let w = parseInt(localStorage.getItem("weekAI"));
+
+  if (p && d) {
+    fullPlan = p;
+    done = d;
+    currentWeek = w || 0;
+    render();
+  }
+}
+
+load();
+
+</script>
+
+</body>
+</html>
