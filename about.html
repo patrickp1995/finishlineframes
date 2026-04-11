@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About - Finish Line Frames</title>
+
+<style>
+body {
+  margin: 0;
+  background: black;
+  color: white;
+  font-family: Arial, sans-serif;
+  padding-top: 80px;
+  text-align: center;
+}
+
+/* Navbar minimal wie deine Seite */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 15px;
+  background: rgba(0,0,0,0.8);
+  text-align: left;
+  padding-left: 20px;
+  font-weight: bold;
+}
+
+/* Container */
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Titel */
+h1 {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+/* Game Box */
+.game-box {
+  margin-top: 40px;
+  padding: 20px;
+  border: 2px solid #00ffcc;
+  border-radius: 10px;
+}
+
+/* Runner */
+#runner {
+  font-size: 40px;
+  position: relative;
+  left: 0;
+  transition: left 0.1s;
+}
+
+/* Button */
+button {
+  padding: 10px 20px;
+  margin-top: 15px;
+  border: none;
+  background: #00ffcc;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#score {
+  font-size: 20px;
+  margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">Finish Line Frames - About</div>
+
+<div class="container">
+
+<h1>🏁 About Us</h1>
+
+<p>
+Finish Line Frames is about running, photography and the mindset of never quitting.
+We capture motion, motivation and moments of endurance.
+</p>
+
+<p>
+👉 Run your own race. Every frame tells a story.
+</p>
+
+---
+
+<div class="game-box">
+  <h2>🏃‍♂️ Mini Runner Game</h2>
+
+  <p>Press SPACE to run!</p>
+
+  <div id="runner">🏃‍♂️</div>
+
+  <button onclick="startGame()">Start Game</button>
+
+  <p id="score">Score: 0</p>
+</div>
+
+</div>
+
+<script>
+
+let score = 0;
+let running = false;
+let runner = document.getElementById("runner");
+
+function startGame() {
+  score = 0;
+  running = true;
+  runner.style.left = "0px";
+  document.getElementById("score").innerText = "Score: 0";
+}
+
+// SPACE to run
+document.addEventListener("keydown", function(e) {
+  if (!running) return;
+
+  if (e.code === "Space") {
+    score++;
+
+    let pos = parseInt(runner.style.left || "0");
+    pos += 10;
+    runner.style.left = pos + "px";
+
+    document.getElementById("score").innerText = "Score: " + score;
+
+    // win condition
+    if (score >= 20) {
+      running = false;
+      alert("🏁 You finished the race!");
+    }
+  }
+});
+
+</script>
+
+</body>
+</html>
