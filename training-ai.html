@@ -1,249 +1,209 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Training AI | Finish Line Frames</title>
 
 <style>
-/* ===== BASIS (wie Hauptseite) ===== */
 body {
   margin: 0;
   padding-top: 70px;
-  background-color: black;
+  background: black;
   color: white;
   font-family: Arial, sans-serif;
-  overflow-x: hidden;
 }
 
-/* Hintergrundvideo */
-#bg-video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1;
-  opacity: 0.35;
-}
-
-/* NAVBAR */
 .navbar {
   position: fixed;
   top: 0;
   width: 100%;
   padding: 15px 20px;
-  background: rgba(0,0,0,0.75);
+  background: rgba(0,0,0,0.8);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 1000;
-  box-sizing: border-box;
 }
 
-.logo {
-  font-weight: bold;
-  font-size: 20px;
-}
+.logo { font-weight: bold; }
 
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-links li a {
-  color: white;
-  text-decoration: none;
-}
-
-/* TITLE */
-h1 {
-  text-align: center;
-  font-size: 50px;
-  margin: 30px 0 10px;
-  letter-spacing: 3px;
-}
-
-/* BUTTONS */
-.wrapper {
+.container {
   max-width: 1000px;
   margin: auto;
   padding: 20px;
-  text-align: center;
 }
 
-.dist-btns {
+h1 {
+  text-align: center;
+  margin-top: 30px;
+}
+
+/* BUTTONS */
+.btns {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 10px;
   justify-content: center;
-  margin: 30px 0;
+  margin: 20px 0;
 }
 
-.dist-btn {
-  padding: 15px 25px;
-  background: rgba(0,0,0,0.6);
+button {
+  padding: 12px 18px;
+  background: transparent;
   border: 1px solid #00ffcc;
   color: white;
   cursor: pointer;
-  font-size: 18px;
   transition: 0.3s;
 }
 
-.dist-btn:hover {
+button:hover {
   background: #00ffcc;
   color: black;
 }
 
-/* PLAN BOX */
-.card {
-  background: rgba(0,0,0,0.65);
+/* WEEK BOX */
+.week {
+  background: rgba(255,255,255,0.05);
   border: 1px solid #00ffcc;
+  margin: 15px 0;
+  padding: 15px;
   border-radius: 10px;
-  padding: 20px;
-  margin-top: 20px;
-  text-align: left;
 }
 
-/* HR ZONES */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 15px;
+.day {
+  margin: 5px 0;
+  padding: 8px;
+  background: rgba(0,0,0,0.4);
+  border-radius: 6px;
 }
 
-td, th {
-  border: 1px solid #00ffcc;
-  padding: 10px;
-  text-align: center;
+/* HR */
+.hr {
+  color: #00ffcc;
 }
 </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar">
+<div class="navbar">
   <div class="logo">Finish Line Frames</div>
+</div>
 
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="training-ai.html">Training AI</a></li>
-  </ul>
-</nav>
+<div class="container">
 
-<!-- VIDEO -->
-<video autoplay muted loop playsinline id="bg-video">
-  <source src="sport.mp4" type="video/mp4">
-</video>
+<h1>Training AI – Real Weekly Plans</h1>
 
-<h1>Training AI</h1>
+<div class="btns">
+  <button onclick="generate('5k')">5 KM</button>
+  <button onclick="generate('10k')">10 KM</button>
+  <button onclick="generate('hm')">HALBMARATHON</button>
+  <button onclick="generate('m')">MARATHON</button>
+</div>
 
-<div class="wrapper">
-
-  <p>Wähle deine Distanz und starte einen echten strukturierten Trainingsplan.</p>
-
-  <!-- BUTTONS -->
-  <div class="dist-btns">
-    <button class="dist-btn" onclick="loadPlan('5k')">5 KM PLAN</button>
-    <button class="dist-btn" onclick="loadPlan('10k')">10 KM PLAN</button>
-    <button class="dist-btn" onclick="loadPlan('hm')">HALBMARATHON</button>
-    <button class="dist-btn" onclick="loadPlan('m')">MARATHON</button>
-  </div>
-
-  <!-- OUTPUT -->
-  <div id="output" class="card">
-    <h2>Wähle eine Distanz</h2>
-  </div>
+<div id="output"></div>
 
 </div>
 
 <script>
 
-function loadPlan(type) {
+function generate(type) {
 
-  let plan = "";
+  let weeks = [];
 
+  // ===== 5K PLAN (6 WEEKS) =====
   if(type === "5k") {
-    plan = `
-    <h2>🏃 5KM PROFESSIONELL PLAN</h2>
-    <p><b>Ziel:</b> Schnelligkeit + saubere Pace Kontrolle</p>
-
-    <ul>
-      <li>Tag 1: Intervalle (6x400m schnell)</li>
-      <li>Tag 2: Easy Run 20–30 min</li>
-      <li>Tag 3: Ruhetag</li>
-      <li>Tag 4: Tempo Run 3–4 km</li>
-      <li>Tag 5: Easy Run</li>
-      <li>Tag 6: Long Run 6–8 km</li>
-      <li>Tag 7: Ruhe</li>
-    </ul>
-
-    <h3>❤️ Herzfrequenz</h3>
-    <p>Zone 2: 60–75% (Ausdauer)<br>
-    Zone 4: Intervalle (85–92%)</p>
-    `;
+    for(let w=1; w<=6; w++){
+      weeks.push({
+        title: "Woche " + w,
+        days: [
+          "Easy Run 20–30 min (Zone 2)",
+          "Intervalle " + (w+2) + "x400m (Zone 4)",
+          "Ruhetag",
+          "Tempo Run 3 km (Zone 3-4)",
+          "Easy Run 20 min",
+          "Long Run 5–7 km (Zone 2)",
+          "Ruhetag"
+        ]
+      });
+    }
   }
 
+  // ===== 10K PLAN (8 WEEKS) =====
   if(type === "10k") {
-    plan = `
-    <h2>🏃 10KM PLAN</h2>
-    <p><b>Ziel:</b> Ausdauer + Tempo Stabilität</p>
-
-    <ul>
-      <li>Intervalle 5x800m</li>
-      <li>Easy Run 40 min</li>
-      <li>Tempo Run 5–7 km</li>
-      <li>Long Run 10–14 km</li>
-      <li>Ruhetage integriert</li>
-    </ul>
-
-    <h3>❤️ Herzfrequenz</h3>
-    <p>Zone 2–3 für Aufbau<br>Zone 4 für Tempo</p>
-    `;
+    for(let w=1; w<=8; w++){
+      weeks.push({
+        title: "Woche " + w,
+        days: [
+          "Easy Run 30–40 min",
+          "Intervalle 5x800m",
+          "Ruhetag",
+          "Tempo Run 5–6 km",
+          "Easy Run 30 min",
+          "Long Run " + (8+w) + " km",
+          "Ruhetag"
+        ]
+      });
+    }
   }
 
+  // ===== HALF MARATHON (10 WEEKS) =====
   if(type === "hm") {
-    plan = `
-    <h2>🏃 HALBMARATHON PLAN</h2>
-    <p><b>Ziel:</b> Ausdauer + Fettstoffwechsel + Pace Kontrolle</p>
-
-    <ul>
-      <li>Long Run 16–22 km</li>
-      <li>Tempo Runs 8–12 km</li>
-      <li>Easy Runs 40–60 min</li>
-      <li>Intervalle 1x pro Woche</li>
-      <li>1–2 Ruhetage</li>
-    </ul>
-
-    <h3>❤️ Herzfrequenz</h3>
-    <p>Zone 2 dominant (70%)<br>Zone 3–4 für Tempo</p>
-    `;
+    for(let w=1; w<=10; w++){
+      weeks.push({
+        title: "Woche " + w,
+        days: [
+          "Easy Run 40–50 min",
+          "Intervalle 6x800m",
+          "Ruhetag",
+          "Tempo Run 6–10 km",
+          "Recovery Run 30 min",
+          "Long Run " + (12 + w*1.5).toFixed(0) + " km",
+          "Ruhetag"
+        ]
+      });
+    }
   }
 
+  // ===== MARATHON (14 WEEKS) =====
   if(type === "m") {
-    plan = `
-    <h2>🏃 MARATHON PLAN</h2>
-    <p><b>Ziel:</b> Ausdauer, mentale Stärke, Fettverbrennung</p>
-
-    <ul>
-      <li>Long Run 25–32 km</li>
-      <li>Easy Runs 60–90 min</li>
-      <li>Tempo Runs 10–15 km</li>
-      <li>Recovery Runs</li>
-      <li>Ruhetage extrem wichtig</li>
-    </ul>
-
-    <h3>❤️ Herzfrequenz</h3>
-    <p>Zone 2 (Hauptbereich)<br>Zone 3 max 20%</p>
-    `;
+    for(let w=1; w<=14; w++){
+      weeks.push({
+        title: "Woche " + w,
+        days: [
+          "Easy Run 50–60 min",
+          "Intervalle 6x1000m",
+          "Ruhetag",
+          "Tempo Run 8–14 km",
+          "Recovery Run 30–40 min",
+          "Long Run " + (18 + w*1.5).toFixed(0) + " km",
+          "Ruhetag"
+        ]
+      });
+    }
   }
 
-  document.getElementById("output").innerHTML = plan;
+  render(weeks);
+}
+
+function render(weeks){
+
+  let html = "";
+
+  weeks.forEach(w => {
+
+    html += `<div class="week">
+      <h2>${w.title}</h2>
+    `;
+
+    w.days.forEach(d => {
+      html += `<div class="day">${d}</div>`;
+    });
+
+    html += `</div>`;
+  });
+
+  document.getElementById("output").innerHTML = html;
 }
 
 </script>
