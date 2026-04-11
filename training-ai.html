@@ -5,17 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Training AI Pro | Finish Line Frames</title>
 
-<!-- LEAFLET MAP -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
 <style>
 body {
   margin: 0;
   padding-top: 70px;
   background: black;
   color: white;
-  font-family: Arial, sans-serif;
+  font-family: Arial;
 }
 
 /* NAV */
@@ -23,8 +19,8 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 15px 20px;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0,0,0,0.85);
+  padding: 15px;
   display: flex;
   justify-content: space-between;
   z-index: 1000;
@@ -32,13 +28,13 @@ body {
 
 .navbar a {
   color: white;
-  text-decoration: none;
   margin-right: 15px;
+  text-decoration: none;
 }
 
 /* CONTAINER */
 .container {
-  max-width: 1000px;
+  max-width: 900px;
   margin: auto;
   padding: 15px;
 }
@@ -54,7 +50,6 @@ h1 { text-align: center; }
   margin-bottom: 15px;
 }
 
-/* INPUTS */
 input, button {
   width: 100%;
   padding: 10px;
@@ -66,6 +61,7 @@ input, button {
 button {
   background: #00ffcc;
   font-weight: bold;
+  cursor: pointer;
 }
 
 /* GRID */
@@ -77,31 +73,23 @@ button {
 
 .day {
   background: #111;
-  border-radius: 8px;
   padding: 10px;
+  border-radius: 8px;
   font-size: 12px;
-  cursor: pointer;
   text-align: center;
-  border: 1px solid #222;
+  cursor: pointer;
 }
 
 .day:hover {
-  border-color: #00ffcc;
-}
-
-/* MAP */
-#map {
-  height: 300px;
-  border-radius: 10px;
-  margin-top: 10px;
+  border: 1px solid #00ffcc;
 }
 
 /* DETAILS */
 #details {
-  margin-top: 10px;
   background: rgba(0,255,204,0.08);
   padding: 10px;
   border-radius: 10px;
+  margin-top: 10px;
   display: none;
 }
 </style>
@@ -119,23 +107,18 @@ button {
 
 <div class="container">
 
-<h1>🧠 AI Laufcoach Pro</h1>
+<h1>🧠 Real AI Running Coach</h1>
 
 <div class="card">
 <h3>📊 Eingabe</h3>
-<input id="km" placeholder="Wochen-km Ziel (z.B. 35)">
+<input id="km" placeholder="Wöchentliche km (z.B. 40)">
 <input id="weeks" placeholder="Anzahl Wochen (z.B. 6)">
-<button onclick="generate()">Plan erstellen</button>
+<button onclick="generate()">Trainingsplan erstellen</button>
 </div>
 
 <div class="card">
-<h3>📅 Trainingsplan</h3>
+<h3>📅 Woche</h3>
 <div class="grid" id="grid"></div>
-</div>
-
-<div class="card">
-<h3>📍 Laufroute (OpenStreetMap)</h3>
-<div id="map"></div>
 </div>
 
 <div class="card">
@@ -148,41 +131,33 @@ button {
 <script>
 
 let plan = [];
-let map;
-let routeLine;
-
-function initMap() {
-  map = L.map('map').setView([48.2082, 16.3738], 13); // Wien
-
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap'
-  }).addTo(map);
-}
-
-initMap();
 
 function generate() {
 
-  let km = parseInt(document.getElementById("km").value);
+  let weeklyKm = parseFloat(document.getElementById("km").value);
   let weeks = parseInt(document.getElementById("weeks").value);
 
   plan = [];
 
   for (let w = 0; w < weeks; w++) {
 
-    let week = [];
+    let longRun = weeklyKm * 0.30;
+    let interval = weeklyKm * 0.15;
+    let tempo = weeklyKm * 0.20;
+    let easy = weeklyKm * 0.20;
+    let recovery = weeklyKm * 0.10;
 
-    week.push(create("Easy Run", km * 0.6));
-    week.push(create("Intervalle", km * 0.5));
-    week.push(create("Recovery", km * 0.3));
-    week.push(create("Tempo Run", km * 0.7));
-    week.push(create("Rest", 0));
-    week.push(create("Long Run", km * 1.2));
-    week.push(create("Easy Run", km * 0.4));
+    plan.push([
+      create("Easy Run", easy),
+      create("Intervalle", interval),
+      create("Ruhetag", 0),
+      create("Tempo Run", tempo),
+      create("Recovery", recovery),
+      create("Long Run", longRun),
+      create("Ruhetag", 0)
+    ]);
 
-    plan.push(week);
-
-    km += 2; // progressive overload
+    weeklyKm += 2; // progressive overload
   }
 
   render(0);
@@ -193,23 +168,19 @@ function create(type, km) {
   let pace =
     type === "Intervalle" ? rand(4.0, 4.5) :
     type === "Tempo Run" ? rand(4.5, 5.2) :
-    type === "Long Run" ? rand(5.2, 6.2) :
+    type === "Long Run" ? rand(5.3, 6.3) :
     type === "Recovery" ? rand(6.5, 7.5) :
-    rand(5.5, 6.5);
+    type === "Easy Run" ? rand(5.5, 6.5) :
+    0;
 
   let hr =
-    type === "Intervalle" ? randInt(165, 185) :
-    type === "Tempo Run" ? randInt(155, 170) :
-    type === "Long Run" ? randInt(145, 160) :
-    type === "Recovery" ? randInt(120, 140) :
-    randInt(135, 150);
+    type === "Intervalle" ? randInt(165,185) :
+    type === "Tempo Run" ? randInt(155,170) :
+    type === "Long Run" ? randInt(145,160) :
+    type === "Recovery" ? randInt(120,140) :
+    0;
 
-  return {
-    type,
-    km: km.toFixed(1),
-    pace,
-    hr
-  };
+  return { type, km: km.toFixed(1), pace, hr };
 }
 
 function rand(min,max){
@@ -220,14 +191,13 @@ function randInt(min,max){
   return Math.floor(Math.random()*(max-min)+min);
 }
 
-function render(weekIndex) {
+function render(w){
 
   let html = "";
 
-  plan[weekIndex].forEach((d,i)=>{
-
+  plan[w].forEach((d,i)=>{
     html += `
-      <div class="day" onclick="show(${weekIndex},${i})">
+      <div class="day" onclick="show(${w},${i})">
         ${d.type}<br>${d.km} km
       </div>
     `;
@@ -240,33 +210,26 @@ function show(w,i){
 
   let d = plan[w][i];
 
+  let mapLink = "";
+
+  if(d.type !== "Ruhetag") {
+    mapLink = `
+      <br><br>
+      <a target="_blank"
+      href="https://www.google.com/maps/dir/?api=1&origin=Vienna&destination=Vienna&travelmode=walking">
+      🗺 Route in Google Maps öffnen
+      </a>
+    `;
+  }
+
   document.getElementById("details").style.display = "block";
   document.getElementById("details").innerHTML = `
     <b>${d.type}</b><br><br>
-    🏃 Distanz: ${d.km} km<br>
-    ⚡ Pace: ${d.pace} min/km<br>
-    ❤️ Herzfrequenz: ${d.hr} bpm
+    🏃 km: ${d.km}<br>
+    ⚡ Pace: ${d.pace || "-"} min/km<br>
+    ❤️ HF: ${d.hr || "-"} bpm
+    ${mapLink}
   `;
-
-  drawRoute(d.km);
-}
-
-function drawRoute(km){
-
-  if(routeLine){
-    map.removeLayer(routeLine);
-  }
-
-  let points = [];
-  let lat = 48.2082;
-  let lng = 16.3738;
-
-  for(let i=0;i<km*10;i++){
-    points.push([lat + i*0.0002, lng + i*0.0002]);
-  }
-
-  routeLine = L.polyline(points, {color:"#00ffcc"}).addTo(map);
-  map.fitBounds(routeLine.getBounds());
 }
 
 </script>
