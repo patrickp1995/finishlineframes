@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Training AI | Finish Line Frames</title>
+<title>Training AI Pro | Finish Line Frames</title>
 
 <style>
 body {
@@ -18,14 +18,11 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 15px 20px;
+  padding: 15px;
   background: rgba(0,0,0,0.8);
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
-
-.logo { font-weight: bold; }
 
 .container {
   max-width: 1000px;
@@ -33,27 +30,22 @@ body {
   padding: 20px;
 }
 
-h1 {
-  text-align: center;
-  margin-top: 30px;
-}
+h1 { text-align: center; }
 
 /* BUTTONS */
 .btns {
   display: flex;
-  flex-wrap: wrap;
   gap: 10px;
+  flex-wrap: wrap;
   justify-content: center;
-  margin: 20px 0;
 }
 
 button {
   padding: 12px 18px;
-  background: transparent;
   border: 1px solid #00ffcc;
+  background: transparent;
   color: white;
   cursor: pointer;
-  transition: 0.3s;
 }
 
 button:hover {
@@ -61,25 +53,26 @@ button:hover {
   color: black;
 }
 
-/* WEEK BOX */
+/* WEEK */
 .week {
-  background: rgba(255,255,255,0.05);
   border: 1px solid #00ffcc;
   margin: 15px 0;
   padding: 15px;
   border-radius: 10px;
+  background: rgba(255,255,255,0.03);
 }
 
 .day {
-  margin: 5px 0;
-  padding: 8px;
+  margin: 8px 0;
+  padding: 10px;
   background: rgba(0,0,0,0.4);
   border-radius: 6px;
 }
 
-/* HR */
-.hr {
+.meta {
+  font-size: 12px;
   color: #00ffcc;
+  margin-top: 5px;
 }
 </style>
 </head>
@@ -87,97 +80,250 @@ button:hover {
 <body>
 
 <div class="navbar">
-  <div class="logo">Finish Line Frames</div>
+  <div><b>Training AI PRO</b></div>
 </div>
 
 <div class="container">
 
-<h1>Training AI – Real Weekly Plans</h1>
+<h1>Trainingspläne mit Strategie</h1>
 
 <div class="btns">
-  <button onclick="generate('5k')">5 KM</button>
-  <button onclick="generate('10k')">10 KM</button>
-  <button onclick="generate('hm')">HALBMARATHON</button>
+  <button onclick="generate('5k')">5K</button>
+  <button onclick="generate('10k')">10K</button>
+  <button onclick="generate('hm')">HM</button>
   <button onclick="generate('m')">MARATHON</button>
 </div>
 
-<div id="output"></div>
+<div id="out"></div>
 
 </div>
 
 <script>
 
-function generate(type) {
+function unit(name, pace, hr, goal, strategy){
+
+  return `
+    <div class="day">
+      <b>${name}</b><br>
+      🎯 Ziel: ${goal}<br>
+      🏃 Pace: ${pace} min/km<br>
+      ❤️ HF: ${hr}% max<br>
+      🧠 Strategie: ${strategy}
+    </div>
+  `;
+}
+
+// =========================
+// GENERATOR
+// =========================
+
+function generate(type){
 
   let weeks = [];
 
-  // ===== 5K PLAN (6 WEEKS) =====
-  if(type === "5k") {
+  if(type === "5k"){
     for(let w=1; w<=6; w++){
+
       weeks.push({
         title: "Woche " + w,
         days: [
-          "Easy Run 20–30 min (Zone 2)",
-          "Intervalle " + (w+2) + "x400m (Zone 4)",
-          "Ruhetag",
-          "Tempo Run 3 km (Zone 3-4)",
-          "Easy Run 20 min",
-          "Long Run 5–7 km (Zone 2)",
-          "Ruhetag"
+          unit("Easy Run",
+            "6:00 - 6:40",
+            "65-75",
+            "Grundlagenausdauer",
+            "Fettverbrennung + aerobe Basis aufbauen"),
+
+          unit("Intervalle " + (4+w) + "x400m",
+            "4:15 - 4:45",
+            "85-92",
+            "Speed & VO2max",
+            "Laktatschwelle verbessern, schnelle Fasern aktivieren"),
+
+          unit("Ruhetag",
+            "-",
+            "unter 60",
+            "Regeneration",
+            "Muskeln reparieren"),
+
+          unit("Tempo Run 3-4 km",
+            "4:50 - 5:10",
+            "80-88",
+            "Wettkampftempo",
+            "5K Pace stabilisieren"),
+
+          unit("Easy Run",
+            "6:10",
+            "65",
+            "Erholung",
+            "aktive Regeneration"),
+
+          unit("Long Run 6-8 km",
+            "5:50 - 6:30",
+            "70-75",
+            "Ausdauer",
+            "aerobe Kapazität erweitern"),
+
+          unit("Ruhetag",
+            "-",
+            "-",
+            "Erholung",
+            "Adaptation")
         ]
       });
     }
   }
 
-  // ===== 10K PLAN (8 WEEKS) =====
-  if(type === "10k") {
+  if(type === "10k"){
     for(let w=1; w<=8; w++){
+
       weeks.push({
         title: "Woche " + w,
         days: [
-          "Easy Run 30–40 min",
-          "Intervalle 5x800m",
-          "Ruhetag",
-          "Tempo Run 5–6 km",
-          "Easy Run 30 min",
-          "Long Run " + (8+w) + " km",
-          "Ruhetag"
+          unit("Easy Run",
+            "5:50 - 6:30",
+            "65-75",
+            "Grundlage",
+            "aerobe Effizienz"),
+
+          unit("Intervalle 5x800m",
+            "4:30 - 5:00",
+            "85-92",
+            "VO2max",
+            "Sauerstoffaufnahme steigern"),
+
+          unit("Ruhetag",
+            "-",
+            "unter 60",
+            "Erholung",
+            "Superkompensation"),
+
+          unit("Tempo Run 5-6 km",
+            "4:45 - 5:10",
+            "80-88",
+            "10K Race Pace",
+            "Schwelle erhöhen"),
+
+          unit("Recovery Run",
+            "6:10 - 6:50",
+            "65",
+            "Regeneration",
+            "Durchblutung fördern"),
+
+          unit("Long Run",
+            "5:40 - 6:20",
+            "70-75",
+            "Ausdauer",
+            "Fettstoffwechsel"),
+
+          unit("Ruhetag",
+            "-",
+            "-",
+            "Erholung",
+            "Erholung sichern")
         ]
       });
     }
   }
 
-  // ===== HALF MARATHON (10 WEEKS) =====
-  if(type === "hm") {
+  if(type === "hm"){
     for(let w=1; w<=10; w++){
+
       weeks.push({
         title: "Woche " + w,
         days: [
-          "Easy Run 40–50 min",
-          "Intervalle 6x800m",
-          "Ruhetag",
-          "Tempo Run 6–10 km",
-          "Recovery Run 30 min",
-          "Long Run " + (12 + w*1.5).toFixed(0) + " km",
-          "Ruhetag"
+          unit("Easy Run",
+            "5:50 - 6:40",
+            "65-75",
+            "Basis",
+            "aerobe Stabilität"),
+
+          unit("Intervalle 6x800m",
+            "4:25 - 4:55",
+            "85-92",
+            "VO2max",
+            "Herzleistung verbessern"),
+
+          unit("Ruhetag",
+            "-",
+            "unter 60",
+            "Erholung",
+            "Muskelreparatur"),
+
+          unit("Tempo Run 8-12 km",
+            "4:50 - 5:20",
+            "80-88",
+            "Race Simulation",
+            "Halbmarathon Pace stabilisieren"),
+
+          unit("Recovery",
+            "6:10 - 6:50",
+            "65",
+            "Regeneration",
+            "aktive Erholung"),
+
+          unit("Long Run",
+            "5:40 - 6:30",
+            "70-80",
+            "Ausdauer",
+            "Energieeffizienz Fett/Carb"),
+
+          unit("Ruhetag",
+            "-",
+            "-",
+            "Erholung",
+            "Adaptation")
         ]
       });
     }
   }
 
-  // ===== MARATHON (14 WEEKS) =====
-  if(type === "m") {
+  if(type === "m"){
     for(let w=1; w<=14; w++){
+
       weeks.push({
         title: "Woche " + w,
         days: [
-          "Easy Run 50–60 min",
-          "Intervalle 6x1000m",
-          "Ruhetag",
-          "Tempo Run 8–14 km",
-          "Recovery Run 30–40 min",
-          "Long Run " + (18 + w*1.5).toFixed(0) + " km",
-          "Ruhetag"
+          unit("Easy Run",
+            "5:50 - 6:50",
+            "65-75",
+            "Basis",
+            "aerobe Kapazität"),
+
+          unit("Intervalle 6x1000m",
+            "4:20 - 4:50",
+            "85-92",
+            "VO2max",
+            "Sauerstoffeffizienz"),
+
+          unit("Ruhetag",
+            "-",
+            "unter 60",
+            "Erholung",
+            "Regeneration"),
+
+          unit("Marathon Tempo Run",
+            "5:00 - 5:30",
+            "80-85",
+            "Race Pace",
+            "Wettkampfsimulation"),
+
+          unit("Recovery Run",
+            "6:10 - 7:00",
+            "65",
+            "Erholung",
+            "Durchblutung"),
+
+          unit("Long Run",
+            "5:40 - 6:40",
+            "70-80",
+            "Ausdauer",
+            "Fettstoffwechsel + mentale Stärke"),
+
+          unit("Ruhetag",
+            "-",
+            "-",
+            "Erholung",
+            "Superkompensation")
         ]
       });
     }
@@ -196,14 +342,12 @@ function render(weeks){
       <h2>${w.title}</h2>
     `;
 
-    w.days.forEach(d => {
-      html += `<div class="day">${d}</div>`;
-    });
+    w.days.forEach(d => html += d);
 
     html += `</div>`;
   });
 
-  document.getElementById("output").innerHTML = html;
+  document.getElementById("out").innerHTML = html;
 }
 
 </script>
