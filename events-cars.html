@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Events - Cars | Finish Line Frames</title>
+
 <style>
-/* Basis */
 body {
   margin: 0;
   padding-top: 70px;
@@ -15,21 +15,20 @@ body {
   overflow-x: hidden;
 }
 
-/* Überschrift */
+/* TITLE */
 h1 {
   font-size: 50px;
   font-weight: 900;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: #FFFFFF;
   text-align: center;
   margin: 20px 0 10px 0;
   opacity: 0;
   transform: translateY(-20px);
-  transition: opacity 1s ease, transform 1s ease;
+  transition: 1s ease;
 }
 
-/* Events Bereich */
+/* EVENTS */
 #events {
   max-width: 1000px;
   margin: 0 auto 50px auto;
@@ -39,7 +38,7 @@ h1 {
   gap: 20px;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 1s ease, transform 1s ease;
+  transition: 1s ease;
 }
 
 .event-card {
@@ -47,22 +46,14 @@ h1 {
   padding: 15px 20px;
   border-radius: 8px;
   border: 1px solid #00ffcc;
-  transition: transform 0.3s;
+  transition: 0.3s;
 }
 
 .event-card:hover {
   transform: scale(1.02);
 }
 
-.event-card h3 {
-  margin: 0 0 5px 0;
-}
-
-.event-card p {
-  margin: 0;
-}
-
-/* Navbar */
+/* ================= NAVBAR ================= */
 .navbar {
   position: fixed;
   top: 0;
@@ -79,39 +70,35 @@ h1 {
 .logo {
   font-weight: bold;
   font-size: 20px;
-  color: white;
 }
 
+/* LINKS */
 .nav-links {
   list-style: none;
   display: flex;
   gap: 20px;
   margin: 0;
   padding: 0;
-  position: relative;
 }
 
 .nav-links li {
   position: relative;
 }
 
-.nav-links li a {
+.nav-links a {
   color: white;
   text-decoration: none;
   font-size: 16px;
   padding: 5px 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: block;
+  transition: 0.3s;
 }
 
-.nav-links li a .arrow {
-  display: inline-block;
-  margin-left: 5px;
-  transition: transform 0.3s ease;
+.nav-links a:hover {
+  color: #00ffcc;
 }
 
-/* Dropdown Untermenü */
+/* DROPDOWN */
 .nav-links li ul {
   display: none;
   position: absolute;
@@ -121,82 +108,58 @@ h1 {
   list-style: none;
   padding: 10px 0;
   min-width: 150px;
-  z-index: 1000;
-  opacity: 0;
-  transform: translateX(-20px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.nav-links li:hover > ul {
+.nav-links li:hover ul {
   display: block;
-  opacity: 1;
-  transform: translateX(0);
 }
 
 .nav-links li ul li a {
   padding: 8px 15px;
-  white-space: nowrap;
 }
 
-/* Hamburger Button */
+/* MOBILE */
 .menu-toggle {
   display: none;
   font-size: 30px;
   cursor: pointer;
-  z-index: 1001;
   color: white;
-  user-select: none;
 }
 
-/* Mobile */
 @media (max-width: 768px) {
+
   h1 { font-size: 40px; }
 
   .menu-toggle { display: block; }
 
   .nav-links {
-    flex-direction: column;
     position: fixed;
     top: 70px;
     right: -100%;
     width: 220px;
     height: calc(100% - 70px);
     background: rgba(0,0,0,0.9);
+    flex-direction: column;
     padding-top: 20px;
-    gap: 15px;
     transition: 0.3s;
-    overflow-y: auto;
   }
 
-  .nav-links.active { right: 0; }
+  .nav-links.active {
+    right: 0;
+  }
 
   .nav-links li ul {
     position: static;
     display: none;
     background: transparent;
-    padding: 0;
-    opacity: 1;
-    transform: translateX(0);
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
   }
 
-  .nav-links li.active > ul {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    max-height: 500px;
+  .nav-links li.active ul {
+    display: block;
   }
-
-  .nav-links li.active > a .arrow {
-    transform: rotate(90deg);
-  }
-
-  .nav-links li a { padding: 10px 15px; }
 }
 
-/* Hintergrundvideo */
+/* VIDEO */
 #bg-video {
   position: fixed;
   top: 0;
@@ -206,114 +169,118 @@ h1 {
   object-fit: cover;
   z-index: -1;
   opacity: 0;
-  transition: opacity 2s ease;
+  transition: 2s ease;
 }
 </style>
 </head>
+
 <body>
 
-<!-- Navbar -->
+<!-- NAVBAR -->
 <nav class="navbar">
   <div class="logo">Finish Line Frames</div>
 
   <ul class="nav-links" id="navLinks">
-    <li class="dropdown">
-      <a href="#">Home <span class="arrow">▶</span></a>
+
+    <li>
+      <a href="#">Home</a>
       <ul>
         <li><a href="index.html">Welcome</a></li>
-        <li><a href="#">About</a></li>
+        <li><a href="about.html">About</a></li>
       </ul>
     </li>
-    <li class="dropdown">
-      <a href="#">Pictures <span class="arrow">▶</span></a>
+
+    <li>
+      <a href="#">Pictures</a>
       <ul>
         <li><a href="#">Cars</a></li>
         <li><a href="#">Bikes</a></li>
         <li><a href="#">Nature</a></li>
       </ul>
     </li>
-    <li class="dropdown">
-      <a href="#">Events <span class="arrow">▶</span></a>
+
+    <li>
+      <a href="#">Events</a>
       <ul>
         <li><a href="events-running.html">Running</a></li>
         <li><a href="events-cars.html">Cars</a></li>
       </ul>
     </li>
-    <li class="dropdown">
-      <a href="#">Training <span class="arrow">▶</span></a>
+
+    <li>
+      <a href="#">Training</a>
       <ul>
         <li><a href="training-plans.html">Plans</a></li>
         <li><a href="training-tips.html">Tips</a></li>
         <li><a href="#">Nutrition</a></li>
       </ul>
     </li>
+
   </ul>
 
   <div class="menu-toggle" id="menuBtn">☰</div>
 </nav>
 
-<!-- Überschrift -->
+<!-- TITLE -->
 <h1 id="mainTitle">Car Events</h1>
 
-<!-- Events Bereich -->
+<!-- EVENTS -->
 <div id="events"></div>
 
-<!-- Hintergrundvideo -->
+<!-- VIDEO -->
 <video autoplay muted loop playsinline id="bg-video">
   <source src="EventsCarMovie.mp4" type="video/mp4">
 </video>
 
 <script>
-  // Car Events eintragen
-  const carEvents = [
-    { name: "Classic Car Show 2026", date: "15. Mai 2026", description: "Showcasing vintage and modern cars from all over the world." },
-    { name: "Speedway Racing Weekend", date: "22. Juni 2026", description: "Exciting racing events for car enthusiasts." },
-    { name: "Electric Car Expo", date: "10. August 2026", description: "Discover the latest in electric car technology." }
-  ];
 
-  const eventsContainer = document.getElementById("events");
+// events
+const carEvents = [
+  { name: "Classic Car Show 2026", date: "15. Mai 2026", description: "Showcasing vintage and modern cars from all over the world." },
+  { name: "Speedway Racing Weekend", date: "22. Juni 2026", description: "Exciting racing events for car enthusiasts." },
+  { name: "Electric Car Expo", date: "10. August 2026", description: "Discover the latest in electric car technology." }
+];
 
-  carEvents.forEach(event => {
-    const card = document.createElement("div");
-    card.className = "event-card";
-    card.innerHTML = `
-      <h3>${event.name}</h3>
-      <p><strong>Date:</strong> ${event.date}</p>
-      <p>${event.description}</p>
-    `;
-    eventsContainer.appendChild(card);
+const container = document.getElementById("events");
+
+carEvents.forEach(e => {
+  const card = document.createElement("div");
+  card.className = "event-card";
+  card.innerHTML = `
+    <h3>${e.name}</h3>
+    <p><strong>Date:</strong> ${e.date}</p>
+    <p>${e.description}</p>
+  `;
+  container.appendChild(card);
+});
+
+// fade in
+window.addEventListener("load", () => {
+  document.getElementById("mainTitle").style.opacity = "1";
+  document.getElementById("mainTitle").style.transform = "translateY(0)";
+  container.style.opacity = "1";
+  container.style.transform = "translateY(0)";
+  document.getElementById("bg-video").style.opacity = "1";
+});
+
+// mobile menu
+const menuBtn = document.getElementById("menuBtn");
+const navLinks = document.getElementById("navLinks");
+
+menuBtn.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+});
+
+// mobile dropdown
+document.querySelectorAll(".nav-links > li").forEach(li => {
+  li.addEventListener("click", () => {
+    if (window.innerWidth <= 768) {
+      li.classList.toggle("active");
+    }
   });
+});
 
-  // Fade-In Animation
-  window.addEventListener('load', () => {
-    document.getElementById('mainTitle').style.opacity = '1';
-    document.getElementById('mainTitle').style.transform = 'translateY(0)';
-    eventsContainer.style.opacity = '1';
-    eventsContainer.style.transform = 'translateY(0)';
-    document.getElementById('bg-video').style.opacity = '1';
-  });
-
-  // Mobile Menü Toggle
-  const menuBtn = document.getElementById("menuBtn");
-  const navLinks = document.getElementById("navLinks");
-  menuBtn.addEventListener("click", () => navLinks.classList.toggle("active"));
-
-  // Mobile Dropdown Toggle
-  const dropdowns = document.querySelectorAll('.nav-links .dropdown');
-  dropdowns.forEach(drop => {
-    drop.addEventListener('click', (e) => {
-      if (window.innerWidth <= 768) {
-        e.stopPropagation();
-        const subMenu = drop.querySelector('ul');
-        drop.classList.toggle('active');
-        if (drop.classList.contains('active')) {
-          subMenu.style.maxHeight = subMenu.scrollHeight + "px";
-        } else {
-          subMenu.style.maxHeight = "0";
-        }
-      }
-    });
-  });
 </script>
+
 </body>
 </html>
