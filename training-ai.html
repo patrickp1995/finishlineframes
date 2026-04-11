@@ -3,33 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Training AI Level Up</title>
+<title>Training AI Garmin Pro</title>
 
 <style>
 body {
   margin: 0;
   padding-top: 70px;
-  background: #020617;
+  font-family: Arial;
+  background: #0b0f1a;
   color: white;
-  font-family: Arial, sans-serif;
 }
 
+/* NAV */
 .navbar {
   position: fixed;
   top: 0;
   width: 100%;
-  background: rgba(0,0,0,0.85);
+  background: #0f172a;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 15px 20px;
   z-index: 1000;
 }
 
-.logo { font-weight: bold; }
+.logo {
+  font-weight: bold;
+  color: #22c55e;
+}
 
 .nav-links {
   display: flex;
-  gap: 20px;
+  gap: 15px;
   list-style: none;
 }
 
@@ -40,27 +45,32 @@ body {
 
 .menu-toggle {
   display: none;
-  cursor: pointer;
 }
 
-/* CONTENT */
+/* LAYOUT */
 .container {
-  max-width: 900px;
+  max-width: 1100px;
   margin: auto;
   padding: 20px;
 }
 
-.card {
-  background: #0f172a;
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 15px;
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px;
 }
 
+.card {
+  background: #111827;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+/* INPUT */
 input, select, button {
   width: 100%;
   padding: 10px;
-  margin: 5px 0;
+  margin-top: 5px;
   border-radius: 8px;
   border: none;
 }
@@ -68,7 +78,6 @@ input, select, button {
 button {
   background: #22c55e;
   font-weight: bold;
-  cursor: pointer;
 }
 
 /* CALENDAR */
@@ -79,34 +88,49 @@ button {
 }
 
 .day {
-  background: #020617;
-  padding: 10px;
+  background: #0b0f1a;
+  padding: 8px;
+  font-size: 11px;
   border-radius: 8px;
   text-align: center;
-  font-size: 11px;
   cursor: pointer;
 }
 
-.done { background: #22c55e; color: black; }
+.done {
+  background: #22c55e;
+  color: black;
+}
 
-.progress {
-  height: 12px;
-  background: #333;
+/* PROGRESS */
+.track {
+  background: #222;
+  height: 10px;
   border-radius: 10px;
-  overflow: hidden;
 }
 
 .bar {
   height: 100%;
   width: 0%;
-  background: #38bdf8;
+  background: #22c55e;
 }
 
-@media(max-width:768px){
-  .menu-toggle{display:block;}
-  .nav-links{
-    display:none;
-  }
+/* CHART */
+.chart {
+  display: flex;
+  align-items: flex-end;
+  height: 120px;
+  gap: 5px;
+}
+
+.c {
+  flex: 1;
+  background: #22c55e;
+  border-radius: 5px;
+}
+
+/* MOBILE */
+@media(max-width:900px){
+  .grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -114,48 +138,63 @@ button {
 <body>
 
 <!-- NAV -->
-<nav class="navbar">
-  <div class="logo">Training AI ⚡</div>
-
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="events-running.html">Events</a></li>
-    <li><a href="training-ai.html">AI</a></li>
-  </ul>
-
+<div class="navbar">
+  <div class="logo">🏃 Training AI Pro</div>
   <div class="menu-toggle">☰</div>
-</nav>
+</div>
 
-<!-- APP -->
 <div class="container">
 
-<h2>🤖 AI Coach Level Up</h2>
-
+<!-- ================= AI TRAINING ================= -->
 <div class="card">
+  <h2>🤖 AI Coach</h2>
+
   <select id="goal">
     <option value="5">5K</option>
     <option value="10">10K</option>
     <option value="21">Half Marathon</option>
   </select>
 
-  <input id="km" placeholder="Aktuelle km (z.B. 5)">
-  <input id="name" placeholder="Name">
-  <button onclick="start()">Plan starten</button>
+  <input id="km" placeholder="Aktuelle km">
+  <button onclick="generate()">Plan erstellen</button>
 </div>
 
 <div class="card">
-  <h3>Woche <span id="w">1</span></h3>
+  <h3>📅 Woche <span id="w">1</span></h3>
   <div class="calendar" id="cal"></div>
 </div>
 
-<div class="card">
-  <h3>📊 Fortschritt</h3>
-  <div class="progress"><div class="bar" id="bar"></div></div>
+<!-- ================= GARMIN DASHBOARD ================= -->
+<div class="grid">
+
+  <div class="card">
+    <h3>Weekly Distance</h3>
+    <h1 id="dist">0 km</h1>
+  </div>
+
+  <div class="card">
+    <h3>Fitness Score</h3>
+    <h1 id="fit">50</h1>
+  </div>
+
+  <div class="card">
+    <h3>Progress</h3>
+    <div class="track"><div class="bar" id="bar"></div></div>
+  </div>
+
 </div>
 
-<div class="card">
-  <h3>🧠 AI Coach</h3>
-  <p id="coach"></p>
+<div class="card" style="margin-top:15px;">
+  <h3>📊 Last 7 Days</h3>
+  <div class="chart">
+    <div class="c" style="height:30%"></div>
+    <div class="c" style="height:60%"></div>
+    <div class="c" style="height:40%"></div>
+    <div class="c" style="height:80%"></div>
+    <div class="c" style="height:55%"></div>
+    <div class="c" style="height:90%"></div>
+    <div class="c" style="height:70%"></div>
+  </div>
 </div>
 
 </div>
@@ -166,74 +205,36 @@ let plan = [];
 let done = [];
 let week = 0;
 
-let profile = {
-  fitness: 50,
-  stress: 0
-};
+let fitness = 50;
 
-function start(){
+function generate(){
+
   let km = parseFloat(document.getElementById("km").value);
-  let goal = document.getElementById("goal").value;
-
-  generate(km, goal);
-  render();
-}
-
-/* =======================
-   AI LOGIC (LEVEL UP)
-======================= */
-function generate(baseKm, goal){
 
   plan = [];
   done = [];
 
-  let km = baseKm;
-
-  for(let w=0; w<8; w++){
-
-    let intensity = getIntensity(goal, w, profile.fitness);
-
-    if(intensity === "low") km += 0.5;
-    if(intensity === "high") km += 1.5;
+  for(let w=0; w<6; w++){
 
     let weekPlan = [
-      "Easy " + km.toFixed(1) + " km",
+      "Easy " + km + " km",
       "Intervals",
-      "Recovery",
-      "Tempo Run",
       "Rest",
-      "Long " + (km+2).toFixed(1) + " km",
-      "Easy Jog"
+      "Tempo",
+      "Rest",
+      "Long " + (km+2) + " km",
+      "Recovery"
     ];
 
     plan.push(weekPlan);
     done.push(new Array(7).fill(false));
+
+    km += 1;
   }
+
+  render();
 }
 
-function getIntensity(goal, w, fitness){
-
-  if(goal == 5){
-    if(fitness < 45) return "low";
-    if(w > 4) return "high";
-  }
-
-  if(goal == 10){
-    if(fitness < 50) return "low";
-    if(w > 5) return "high";
-  }
-
-  if(goal == 21){
-    if(fitness < 60) return "low";
-    if(w > 6) return "high";
-  }
-
-  return "normal";
-}
-
-/* =======================
-   RENDER
-======================= */
 function render(){
 
   let html = "";
@@ -256,15 +257,12 @@ function render(){
 function toggle(i){
   done[week][i] = !done[week][i];
 
-  if(done[week][i]) profile.fitness += 1;
-  else profile.fitness -= 1;
+  if(done[week][i]) fitness += 2;
+  else fitness -= 1;
 
   render();
 }
 
-/* =======================
-   UPDATE + AI COACH
-======================= */
 function update(){
 
   let count = done[week].filter(x=>x).length;
@@ -272,17 +270,10 @@ function update(){
 
   document.getElementById("bar").style.width = percent + "%";
 
-  let msg = "";
+  document.getElementById("fit").innerText = fitness;
 
-  if(profile.fitness > 75){
-    msg = "🔥 Peak Form – du kannst steigern!";
-  } else if(profile.fitness < 40){
-    msg = "⚠️ Zu wenig Belastung – mehr lockeres Training!";
-  } else {
-    msg = "👍 Stabiler Fortschritt – perfekt im Aufbau!";
-  }
-
-  document.getElementById("coach").innerText = msg;
+  document.getElementById("dist").innerText =
+    (Math.random()*30 + 20).toFixed(1) + " km";
 }
 
 </script>
