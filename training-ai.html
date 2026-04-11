@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Training AI Pro | Multi Week Coach</title>
+<title>AI Running Coach V5 | Finish Line Frames</title>
 
 <style>
 body {
@@ -14,7 +14,6 @@ body {
   font-family: Arial;
 }
 
-/* NAV */
 .navbar {
   position: fixed;
   top: 0;
@@ -25,18 +24,14 @@ body {
   justify-content: space-between;
 }
 
-/* CONTAINER */
 .container {
-  max-width: 950px;
+  max-width: 1000px;
   margin: auto;
   padding: 15px;
 }
 
-h1 {
-  text-align: center;
-}
+h1 { text-align: center; }
 
-/* CARD */
 .card {
   background: rgba(20,20,20,0.9);
   border: 1px solid #00ffcc;
@@ -58,22 +53,19 @@ button {
   font-weight: bold;
 }
 
-/* WEEK BOX */
+/* WEEK */
 .week {
   margin-bottom: 20px;
   border: 1px solid #222;
   border-radius: 10px;
   padding: 10px;
-  background: rgba(255,255,255,0.03);
 }
 
 .week-title {
-  font-size: 18px;
-  margin-bottom: 10px;
   color: #00ffcc;
+  margin-bottom: 10px;
 }
 
-/* GRID */
 .grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -85,15 +77,30 @@ button {
   padding: 10px;
   border-radius: 8px;
   font-size: 11px;
-  text-align: center;
   cursor: pointer;
+  text-align: center;
 }
 
 .day:hover {
   border: 1px solid #00ffcc;
 }
 
-/* DETAILS */
+/* STATS */
+.stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.box {
+  flex: 1;
+  background: rgba(255,255,255,0.05);
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+}
+
 #details {
   margin-top: 10px;
   background: rgba(0,255,204,0.08);
@@ -107,21 +114,25 @@ button {
 <body>
 
 <div class="navbar">
-  <div>🏃 AI Coach Pro</div>
-  <div>
-    <a href="index.html" style="color:white">Home</a>
-  </div>
+  <div>🧠 AI Coach V5</div>
+  <div><a href="index.html" style="color:white">Home</a></div>
 </div>
 
 <div class="container">
 
-<h1>🧠 Multi Week AI Coach</h1>
+<h1>🏃 AI Running Coach V5</h1>
 
 <div class="card">
 <h3>📊 Eingabe</h3>
 <input id="km" placeholder="Wöchentliche km (z.B. 40)">
-<input id="weeks" placeholder="Anzahl Wochen (z.B. 6)">
-<button onclick="generate()">Plan erstellen</button>
+<input id="weeks" placeholder="Wochen (z.B. 6)">
+<button onclick="generate()">Start AI Coach</button>
+</div>
+
+<div class="card stats">
+  <div class="box">Fitness<br><span id="fitness">50</span></div>
+  <div class="box">Fatigue<br><span id="fatigue">0</span></div>
+  <div class="box">Zielzeit 10K<br><span id="race">--</span></div>
 </div>
 
 <div id="output"></div>
@@ -136,17 +147,25 @@ button {
 <script>
 
 let plan = [];
+let fitness = 50;
+let fatigue = 0;
 
 function generate() {
 
-  let weeklyKm = parseFloat(document.getElementById("km").value);
+  let baseKm = parseFloat(document.getElementById("km").value);
   let weeks = parseInt(document.getElementById("weeks").value);
 
   plan = [];
 
   for (let w = 0; w < weeks; w++) {
 
-    let km = weeklyKm + (w * 2); // progression
+    let stressFactor = fitness < 40 ? 0.85 : fitness > 70 ? 1.1 : 1;
+
+    let km = (baseKm + w * 2) * stressFactor;
+
+    let weekFatigue = Math.max(0, fatigue - 5 + w);
+
+    if (weekFatigue > 20) km *= 0.9; // deload
 
     plan.push([
       create("Easy Run", km * 0.20),
@@ -157,27 +176,26 @@ function generate() {
       create("Long Run", km * 0.30),
       create("Easy Run", km * 0.05)
     ]);
+
+    fitness = Math.min(100, fitness + 3);
+    fatigue = Math.max(0, fatigue + 4);
   }
 
+  updateStats();
   render();
 }
 
 function create(type, km) {
 
   let pace =
-    type === "Intervalle" ? rand(4.0, 4.5) :
-    type === "Tempo Run" ? rand(4.5, 5.2) :
-    type === "Long Run" ? rand(5.3, 6.3) :
-    type === "Recovery" ? rand(6.2, 7.5) :
-    type === "Easy Run" ? rand(5.5, 6.5) :
-    0;
+    fitness > 70 ? rand(4.2,5.2) :
+    fitness > 50 ? rand(4.8,5.8) :
+    rand(5.2,6.5);
 
   let hr =
-    type === "Intervalle" ? randInt(165,185) :
-    type === "Tempo Run" ? randInt(155,170) :
-    type === "Long Run" ? randInt(145,160) :
-    type === "Recovery" ? randInt(120,140) :
-    0;
+    fitness > 70 ? randInt(145,165) :
+    fitness > 50 ? randInt(150,175) :
+    randInt(155,185);
 
   return { type, km: km.toFixed(1), pace, hr };
 }
@@ -186,15 +204,15 @@ function render() {
 
   let out = "";
 
-  plan.forEach((week, wIndex)=>{
+  plan.forEach((week, w)=>{
 
     out += `<div class="week">
-      <div class="week-title">📅 Woche ${wIndex+1}</div>
+      <div class="week-title">📅 Woche ${w+1}</div>
       <div class="grid">`;
 
     week.forEach((d,i)=>{
       out += `
-        <div class="day" onclick="show(${wIndex},${i})">
+        <div class="day" onclick="show(${w},${i})">
           ${d.type}<br>${d.km} km
         </div>
       `;
@@ -210,26 +228,27 @@ function show(w,i){
 
   let d = plan[w][i];
 
-  let mapLink = "";
-
-  if(d.type !== "Ruhetag"){
-    mapLink = `
-      <br><br>
-      <a target="_blank"
-      href="https://www.google.com/maps/dir/?api=1&origin=Vienna&destination=Vienna&travelmode=walking">
-      🗺 Route in Google Maps öffnen
-      </a>
-    `;
-  }
+  let mapLink = d.type !== "Ruhetag"
+    ? `<br><a target="_blank" href="https://www.google.com/maps/dir/?api=1&origin=Vienna&destination=Vienna">
+       🗺 Route in Google Maps</a>` : "";
 
   document.getElementById("details").style.display = "block";
   document.getElementById("details").innerHTML = `
     <b>${d.type}</b><br><br>
     🏃 km: ${d.km}<br>
-    ⚡ Pace: ${d.pace || "-"}<br>
-    ❤️ HF: ${d.hr || "-"}
+    ⚡ Pace: ${d.pace}<br>
+    ❤️ HF: ${d.hr}
     ${mapLink}
   `;
+}
+
+function updateStats(){
+
+  document.getElementById("fitness").innerText = fitness.toFixed(0);
+  document.getElementById("fatigue").innerText = fatigue.toFixed(0);
+
+  let race = 55 - (fitness / 3);
+  document.getElementById("race").innerText = race.toFixed(1) + " min";
 }
 
 function rand(min,max){
